@@ -11,6 +11,7 @@
 
 #import "RCTBundleURLProvider.h"
 #import "RCTRootView.h"
+#import "RCTBaiduMapViewManager.h"
 
 @implementation AppDelegate
 
@@ -31,6 +32,8 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  
+  [RCTBaiduMapViewManager initSDK:@"o7vjn4T0HZzFMHhNXm5m1Gdftoy0SDuK"];
   return YES;
 }
 
