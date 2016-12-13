@@ -5,117 +5,48 @@ import {
     Text,
     View,
     Image,
-    ListView,
     Alert
 } from 'react-native';
-
 //第三方组件
 import { List, ListItem } from 'react-native-elements'
-import {Actions} from 'react-native-router-flux'
 
-//创建一个DataSource对象
-const ds = new ListView.DataSource({
-    //通过判断决定渲染哪些行组件 避免全部渲染 提高渲染效率
-    rowHasChanged : (oldRow,newRow) => oldRow!=newRow
-});
+/***
+ * 用户信息
+ */
 
 const list = [
     {
-        name: 'Amy Farha',
-        avatar_url: 'http://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-        subtitle: 'Vice President'
-    },
-    {
-        name: 'Chris Jackson',
-        avatar_url: 'http://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-        subtitle: 'Vice Chairman'
-    },
-    {
-        name: 'Amy Farha',
-        avatar_url: 'http://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-        subtitle: 'Vice President'
-    },
-    {
-        name: 'Chris Jackson',
-        avatar_url: 'http://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-        subtitle: 'Vice Chairman'
-    },
-    {
-        name: 'Amy Farha',
-        avatar_url: 'http://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-        subtitle: 'Vice President'
-    },
-    {
-        name: 'Chris Jackson',
-        avatar_url: 'http://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-        subtitle: 'Vice Chairman'
-    },
-    {
-        name: 'Amy Farha',
-        avatar_url: 'http://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-        subtitle: 'Vice President'
-    },
-    {
-        name: 'Chris Jackson',
-        avatar_url: 'http://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-        subtitle: 'Vice Chairman'
-    },
-    {
-        name: 'Amy Farha',
-        avatar_url: 'http://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-        subtitle: 'Vice President'
-    },
-    {
-        name: 'Chris Jackson',
-        avatar_url: 'http://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-        subtitle: 'Vice Chairman'
+        userName: 'LanccJ'
     }
 ]
 
-
-/**
- * 登录用户的会话列表
- * */
 export default class SignInfoList extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            //设置dataSource不使用原始数据
-            //使用复制后的数据源 ds.cloneWithRows(list)
-            dataSource:ds.cloneWithRows(list)
-        };
-    }
-    renderRow (rowData, sectionID) {
-        return (
-            <ListItem
-                roundAvatar
-                key={sectionID}
-                title={rowData.name}
-                subtitle={rowData.subtitle}
-                avatar={{uri:rowData.avatar_url}}
-                onPress={Actions.ChatingRoom}
-            />
-        )
-    }
-
     render () {
         return (
-            <List
-                containerStyle={{marginTop:0}}
-            >
-                <ListView
-                    renderRow={this.renderRow}
-                    dataSource={this.state.dataSource}
-                />
+            <List containerStyle={[{marginTop:70},styles.container]}>
+                {
+                    list.map((item, i) => (
+                        <ListItem
+                            key={i}
+                            title={item.userName}
+                            avatar={require('../images/user/userPic.jpg')}
+                            onPress={_onPress}
+                            containerStyle={[{height:100}]}
+                            avatarStyle={[{height:80,width:80}]}
+                        />
+                    ))
+                }
             </List>
         )
     }
 }
 
 const _onPress=()=>{
-    Alert.alert('你点击了某个会话聊天');
+    Alert.alert('你点击了');
 }
 
 const styles = StyleSheet.create({
+    container:{
+    }
 
 });
