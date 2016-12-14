@@ -8,8 +8,10 @@ import Constant from '../../common/Constant';
 import StateCode from '../../common/StateCode';
 //ActionTpye
 import * as ActionTypes from '../actions/ActionTypes';
-
-
+var DeviceInfo = require('react-native-device-info');
+import {
+    Geolocation
+} from 'react-native-baidu-map';
 
 /**
  *登录
@@ -19,21 +21,35 @@ export function login(user){
     return (dispatch)=>{
         dispatch({'type':ActionTypes.LOGIN_ING});
 
+        let latitude='';
+        let longitude='';
+
+        //获取手机当前坐标
+        Geolocation.getCurrentPosition()
+            .then(data => {
+                latitude=data.latitude,
+                longitude=data.longitude
+            })
+            .catch(e =>{
+               console.log('登录前获取GPS,latitude:'+latitude+',longitude:'+longitude);
+            });
+
+
         //处理参数
 console.log(user);
         let params = {
             'username':user.userName,
             'password':user.userPwd,
-            'os_ver': '23',
+            'os_ver': DeviceInfo.getSystemVersion(),
             'gsm_small': '11',
             'operator': 'ct',
             'versionCode': '31051',
             'imei': '869906023011073',
-            'gps_wd': '31.226382614',
-            'gps_jd': '120.625373533',
+            'gps_wd':longitude ,
+            'gps_jd': latitude,
             'gsm_big': '37250',
             'imsi': '460031698651309',
-            'model': 'HUAWEI NXT-AL10'
+            'model': DeviceInfo.getDeviceName()
         };
 
         NetUtil.ptos(Constant.UserLoginUrl,params,function (result) {

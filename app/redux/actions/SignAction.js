@@ -30,3 +30,45 @@ export function signState(user){
 
     }
 }
+
+export function sign(pics,info){
+    console.log('action-用户签到签退动作');
+    return (dispatch)=>{
+
+        //照片参数循环
+
+        /**
+         * {
+         *
+         * }
+         * */
+
+
+
+
+
+
+
+
+        //处理参数
+        let params = {
+            'USER_ID':user.username,
+            //'USER_ID':'chenj',
+            'pageIndex':'0',
+            'pageSize': '6'
+        };
+
+        // let testJson=require('./state.json');
+        //  console.log(testJson)
+
+        NetUtil.ptos(Constant.SignStateUrl,params,function (result) {
+
+            console.log(result);
+            //
+            dispatch({type:ActionTypes.SIGN_STATE,state:result});
+
+        })
+
+    }
+}
+

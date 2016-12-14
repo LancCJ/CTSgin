@@ -73,8 +73,13 @@ class SingMainPage extends Component {
             buttonTitle:'正在加载...',
             buttonisDisabled:false,
 
-            signState:null
+            signState:null,
 
+            longitude:null,
+            latitude:null,
+            avatarSource1:null,
+            avatarSource2:null,
+            avatarSource3:null
         };
 
     }
@@ -98,7 +103,9 @@ class SingMainPage extends Component {
                     center: {
                         latitude: data.latitude,
                         longitude: data.longitude
-                    }
+                    },
+                    latitude: data.latitude,
+                    longitude: data.longitude
                 });
             })
             .catch(e =>{
@@ -119,47 +126,155 @@ class SingMainPage extends Component {
 
         const {state}=nextProps;
 
-        if(state){
+        if(state!=null){
            console.log('我在界面 获取最新的state');
            console.log(state.data.STATUS);
 
            //按照状态来显示 按钮的文字
             if(state.data.STATUS==="-1"){
+                console.log('111111');
                 this.setState({
                     buttonTitle: "打卡上班咯！",
-                    signState:'-1'
-                });
-            }else  if(state.data.STATUS==="0"){
-                this.setState({
-                    buttonTitle: "打卡下班啦！",
                     signState:'0'
                 });
+            }else  if(state.data.STATUS==="0"){
+                console.log('222222');
+                this.setState({
+                    buttonTitle: "打卡下班啦！",
+                    signState:'1'
+                });
             }else  if(state.data.STATUS==="1"){
+                console.log('333333');
                 this.setState({
                     buttonTitle: "嘿!全部完成！",
                     buttonisDisabled:true
                 });
             }
 
+            console.log(this.state);
+
         }
         return true;
     }
 
     _Sign(){
+
+        console.log(this.state);
+
         //1.直接满足条件 直接打卡
         Alert.alert('你点击了');
         //判断是否超过时间 打卡上班要在8.30💰  前    打卡下班要5.30后
 
+        let REMARKS='';
+        let PHOTO_SIZE=0;
+
+        if(this.state.avatarSource1!='undefined'){
+            PHOTO_SIZE=1;
+            if(this.state.avatarSource2!='undefined'){
+                PHOTO_SIZE=2;
+                if(this.state.avatarSource3!='undefined'){
+                    PHOTO_SIZE=3;
+                }
+            }
+        }
 
 
+    //文本信息
 
-
-        //文本信息
+        let infoParams={
+            'COMMIT_TIME':	'2016-12-14 08:42:49',
+            'ADDRESS':	'中国江苏省苏州市虎丘区新元街199号',
+            'REMARKS':	REMARKS,
+            'USER_ID':	this.props.user.username,
+            'SEQ':	'7ae6f163-92ff-4981-9467-29340cc4cc80',
+            'PHOTO_SIZE':	PHOTO_SIZE,
+            'TYPE':this.props.user.signState,
+            'DEPT_ID':	this.props.user.deptId,
+            'LONGITUDE':	this.state.longitude,
+            'LATITUDE':	this.state.latitude
+        }
 
         //照片信息
 
-        //超过时间 需要填写原因
-        //this.refs.modal3.open();
+        let PicParams=null;
+
+        if(this.state.avatarSource1){
+            PicParams={
+                pic1:{
+                    'COMMIT_TIME':'2016-12-14 08:42:45',
+                    'CRRELATION_ID':	'7ae6f163-92ff-4981-9467-29340cc4cc80',//对应的信息ID
+                    'SEQ':	'd70732bd-43cf-4c0f-8fb9-83b3bc1700b2',
+                    'ZP':this.state.avatarSource1.data,
+                    'XH':'0'
+                }
+            }
+            if(this.state.avatarSource2){
+                PicParams={
+                    pic1:{
+                        'COMMIT_TIME':'2016-12-14 08:42:45',
+                        'CRRELATION_ID':	'7ae6f163-92ff-4981-9467-29340cc4cc80',//对应的信息ID
+                        'SEQ':	'd70732bd-43cf-4c0f-8fb9-83b3bc1700b2',
+                        'ZP':this.state.avatarSource1.data,
+                        'XH':'0'
+                    },
+                    pic2:{
+                        'COMMIT_TIME':'2016-12-14 08:42:45',
+                        'CRRELATION_ID':	'7ae6f163-92ff-4981-9467-29340cc4cc80',//对应的信息ID
+                        'SEQ':	'd70732bd-43cf-4c0f-8fb9-83b3bc1700b2',
+                        'ZP':this.state.avatarSource2.data,
+                        'XH':'1'
+                    }
+
+                }
+                if(this.state.avatarSource3){
+                    PicParams={
+                        pic1:{
+                            'COMMIT_TIME':'2016-12-14 08:42:45',
+                            'CRRELATION_ID':	'7ae6f163-92ff-4981-9467-29340cc4cc80',//对应的信息ID
+                            'SEQ':	'd70732bd-43cf-4c0f-8fb9-83b3bc1700b2',
+                            'ZP':this.state.avatarSource1,
+                            'XH':'0'
+                        },
+                        pic2:{
+                            'COMMIT_TIME':'2016-12-14 08:42:45',
+                            'CRRELATION_ID':	'7ae6f163-92ff-4981-9467-29340cc4cc80',//对应的信息ID
+                            'SEQ':	'd70732bd-43cf-4c0f-8fb9-83b3bc1700b2',
+                            'ZP':this.state.avatarSource2,
+                            'XH':'1'
+                        },
+                        pic3:{
+                            'COMMIT_TIME':'2016-12-14 08:42:45',
+                            'CRRELATION_ID':	'7ae6f163-92ff-4981-9467-29340cc4cc80',//对应的信息ID
+                            'SEQ':	'd70732bd-43cf-4c0f-8fb9-83b3bc1700b2',
+                            'ZP':this.state.avatarSource3,
+                            'XH':'2'
+                        }
+
+                    }
+                }
+            }
+        }
+
+        if(this.state.longitude==null || this.state.latitude==null){
+            Alert.alert('GPS信息未获取无法完成本次操作');
+        }else if(PHOTO_SIZE==0){
+            Alert.alert('现场照片至少一张');
+        }else{
+
+            console.log('打卡前参数准备如下....');
+            console.log(PicParams);
+
+            console.log(infoParams);
+
+
+
+
+            //this.props.actions.sign(PicParams,infoParams);//dispath 签到签出
+
+            //超过时间 需要填写原因
+            //this.refs.modal3.open();
+        }
+
     }
 
 
@@ -345,9 +460,11 @@ class SingMainPage extends Component {
                 </View>
 
                 <View style={styles.button}>
-                    <Button  isDisabled={this.state.buttonisDisabled} onPress={this._Sign} style={{ justifyContent:"center",alignItems:"center",width:Dimensions.get('window').height /3-100,height:Dimensions.get('window').height /3-100,borderRadius:(Dimensions.get('window').height /3-100)/2,backgroundColor: '#32C739',borderWidth:0}} textStyle={{fontSize: 18,color:'white'}}>
+
+                    <Button  isDisabled={this.state.buttonisDisabled} onPress={this._Sign.bind(this)} style={{ justifyContent:"center",alignItems:"center",width:Dimensions.get('window').height /3-100,height:Dimensions.get('window').height /3-100,borderRadius:(Dimensions.get('window').height /3-100)/2,backgroundColor: '#32C739',borderWidth:0}} textStyle={{fontSize: 18,color:'white'}}>
                         {this.state.buttonTitle}
                     </Button>
+                    <Text>登录用户:{this.props.user.realname}</Text>
                 </View>
 
                 <Modal style={[styles.modal, styles.modal3]} position={"center"} ref={"modal3"} isDisabled={this.state.isDisabled}>
