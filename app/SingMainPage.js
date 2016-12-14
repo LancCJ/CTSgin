@@ -37,7 +37,6 @@ var ImagePicker = require('react-native-image-picker');
 import {Actions} from 'react-native-router-flux';
 var Modal = require('react-native-modalbox');
 
-
 // More info on all the options is below in the README...just some common use cases shown here
 var options = {
     title: '选取现场照片',
@@ -79,7 +78,11 @@ class SingMainPage extends Component {
             latitude:null,
             avatarSource1:null,
             avatarSource2:null,
-            avatarSource3:null
+            avatarSource3:null,
+
+            base64image1:null,
+            base64image2:null,
+            base64image3:null
         };
 
     }
@@ -135,18 +138,19 @@ class SingMainPage extends Component {
                 console.log('111111');
                 this.setState({
                     buttonTitle: "打卡上班咯！",
-                    signState:'0'
+                    signState:'-1'
                 });
             }else  if(state.data.STATUS==="0"){
                 console.log('222222');
                 this.setState({
                     buttonTitle: "打卡下班啦！",
-                    signState:'1'
+                    signState:'0'
                 });
             }else  if(state.data.STATUS==="1"){
                 console.log('333333');
                 this.setState({
-                    buttonTitle: "嘿!全部完成！",
+                    buttonTitle: "全部完成！",
+                    signState:'1',
                     buttonisDisabled:true
                 });
             }
@@ -162,7 +166,7 @@ class SingMainPage extends Component {
         console.log(this.state);
 
         //1.直接满足条件 直接打卡
-        Alert.alert('你点击了');
+        //Alert.alert('你点击了');
         //判断是否超过时间 打卡上班要在8.30💰  前    打卡下班要5.30后
 
         let REMARKS='';
@@ -188,7 +192,7 @@ class SingMainPage extends Component {
             'USER_ID':	this.props.user.username,
             'SEQ':	'7ae6f163-92ff-4981-9467-29340cc4cc80',
             'PHOTO_SIZE':	PHOTO_SIZE,
-            'TYPE':this.props.user.signState,
+            'TYPE':this.state.signState,
             'DEPT_ID':	this.props.user.deptId,
             'LONGITUDE':	this.state.longitude,
             'LATITUDE':	this.state.latitude
@@ -200,56 +204,56 @@ class SingMainPage extends Component {
 
         if(this.state.avatarSource1){
             PicParams={
-                pic1:{
-                    'COMMIT_TIME':'2016-12-14 08:42:45',
+                "pics":{
+                    'COMMIT_TIME':(new Date()).valueOf().format("yyyy-MM-dd HH:mm:ss"),
                     'CRRELATION_ID':	'7ae6f163-92ff-4981-9467-29340cc4cc80',//对应的信息ID
                     'SEQ':	'd70732bd-43cf-4c0f-8fb9-83b3bc1700b2',
-                    'ZP':this.state.avatarSource1.data,
+                    'ZP':this.state.base64image1,
                     'XH':'0'
                 }
             }
             if(this.state.avatarSource2){
                 PicParams={
-                    pic1:{
-                        'COMMIT_TIME':'2016-12-14 08:42:45',
+                    "pics":[{
+                        'COMMIT_TIME':(new Date()).valueOf(),
                         'CRRELATION_ID':	'7ae6f163-92ff-4981-9467-29340cc4cc80',//对应的信息ID
                         'SEQ':	'd70732bd-43cf-4c0f-8fb9-83b3bc1700b2',
-                        'ZP':this.state.avatarSource1.data,
+                        'ZP':this.state.base64image1,
                         'XH':'0'
                     },
-                    pic2:{
-                        'COMMIT_TIME':'2016-12-14 08:42:45',
+                    {
+                        'COMMIT_TIME':(new Date()).valueOf(),
                         'CRRELATION_ID':	'7ae6f163-92ff-4981-9467-29340cc4cc80',//对应的信息ID
                         'SEQ':	'd70732bd-43cf-4c0f-8fb9-83b3bc1700b2',
-                        'ZP':this.state.avatarSource2.data,
+                        'ZP':this.state.base64image2,
                         'XH':'1'
-                    }
+                    }]
 
                 }
                 if(this.state.avatarSource3){
                     PicParams={
-                        pic1:{
-                            'COMMIT_TIME':'2016-12-14 08:42:45',
+                        "pics":[{
+                            'COMMIT_TIME':(new Date()).valueOf(),
                             'CRRELATION_ID':	'7ae6f163-92ff-4981-9467-29340cc4cc80',//对应的信息ID
                             'SEQ':	'd70732bd-43cf-4c0f-8fb9-83b3bc1700b2',
-                            'ZP':this.state.avatarSource1,
+                            'ZP':this.state.base64image1,
                             'XH':'0'
                         },
-                        pic2:{
-                            'COMMIT_TIME':'2016-12-14 08:42:45',
+                        {
+                            'COMMIT_TIME':(new Date()).valueOf(),
                             'CRRELATION_ID':	'7ae6f163-92ff-4981-9467-29340cc4cc80',//对应的信息ID
                             'SEQ':	'd70732bd-43cf-4c0f-8fb9-83b3bc1700b2',
-                            'ZP':this.state.avatarSource2,
+                            'ZP':this.state.base64image2,
                             'XH':'1'
                         },
-                        pic3:{
-                            'COMMIT_TIME':'2016-12-14 08:42:45',
+                        {
+                            'COMMIT_TIME':(new Date()).valueOf(),
                             'CRRELATION_ID':	'7ae6f163-92ff-4981-9467-29340cc4cc80',//对应的信息ID
                             'SEQ':	'd70732bd-43cf-4c0f-8fb9-83b3bc1700b2',
-                            'ZP':this.state.avatarSource3,
+                            'ZP':this.state.base64image3,
                             'XH':'2'
                         }
-
+]
                     }
                 }
             }
@@ -257,7 +261,7 @@ class SingMainPage extends Component {
 
         if(this.state.longitude==null || this.state.latitude==null){
             Alert.alert('GPS信息未获取无法完成本次操作');
-        }else if(PHOTO_SIZE==0){
+        }else if(PHOTO_SIZE==0 || !this.state.avatarSource1){
             Alert.alert('现场照片至少一张');
         }else{
 
@@ -315,8 +319,13 @@ class SingMainPage extends Component {
 
                 this.setState({
                     avatarSource1: source,
-                    justifyContentStyle:'space-around'
+                    justifyContentStyle:'space-around',
+                    base64image1:response.data
                 });
+
+                //console.log('获取到的图片base64');
+
+                //console.log(source.data);
             }
         });
     }
@@ -359,7 +368,8 @@ class SingMainPage extends Component {
 
                 this.setState({
                     avatarSource2: source,
-                    justifyContentStyle:'space-between'
+                    justifyContentStyle:'space-between',
+                    base64image2:response.data
                 });
             }
         });
@@ -402,7 +412,8 @@ class SingMainPage extends Component {
                 }
 
                 this.setState({
-                    avatarSource3: source
+                    avatarSource3: source,
+                    base64image3:response.data
                 });
             }
         });
@@ -441,7 +452,7 @@ class SingMainPage extends Component {
                             </View>
                         </TouchableOpacity>
 
-                        {this.state.avatarSource1?(
+                        {this.state.base64image1?(
                             <TouchableOpacity onPress={this.state.avatarSource2?null:this.selectPhotoTapped2.bind(this)}>
                                 <View style={{height:(Dimensions.get('window').width-100)/3,width:(Dimensions.get('window').width-100)/3,borderWidth:1,borderStyle:'dashed',justifyContent:'center',alignItems:'center'}}>
                                     <Image source={this.state.avatarSource2?this.state.avatarSource2:this.state.addIcon} style={styles.image} />
@@ -449,7 +460,7 @@ class SingMainPage extends Component {
                             </TouchableOpacity>
                         ):(null)}
 
-                        {this.state.avatarSource2?(
+                        {this.state.base64image2?(
                             <TouchableOpacity onPress={this.state.avatarSource3?null:this.selectPhotoTapped3.bind(this)}>
                                 <View style={{height:(Dimensions.get('window').width-100)/3,width:(Dimensions.get('window').width-100)/3,borderWidth:1,borderStyle:'dashed',justifyContent:'center',alignItems:'center'}}>
                                     <Image source={this.state.avatarSource3?this.state.avatarSource3:this.state.addIcon} style={styles.image} />
@@ -461,10 +472,17 @@ class SingMainPage extends Component {
 
                 <View style={styles.button}>
 
-                    <Button  isDisabled={this.state.buttonisDisabled} onPress={this._Sign.bind(this)} style={{ justifyContent:"center",alignItems:"center",width:Dimensions.get('window').height /3-100,height:Dimensions.get('window').height /3-100,borderRadius:(Dimensions.get('window').height /3-100)/2,backgroundColor: '#32C739',borderWidth:0}} textStyle={{fontSize: 18,color:'white'}}>
-                        {this.state.buttonTitle}
-                    </Button>
-                    <Text>登录用户:{this.props.user.realname}</Text>
+                    {/*<Button  isDisabled={this.state.buttonisDisabled} onPress={this._Sign.bind(this)} style={{ justifyContent:"center",alignItems:"center",width:Dimensions.get('window').height /3-100,height:Dimensions.get('window').height /3-100,borderRadius:(Dimensions.get('window').height /3-100)/2,backgroundColor: '#32C739',borderWidth:0}} textStyle={{fontSize: 18,color:'white'}}>*/}
+                        {/*{this.state.buttonTitle}*/}
+                    {/*</Button>*/}
+                    <TouchableOpacity onPress={this._Sign.bind(this)} >
+                        <View style={{ justifyContent:"center",alignItems:"center",width:Dimensions.get('window').height /3-100,height:Dimensions.get('window').height /3-100,borderRadius:(Dimensions.get('window').height /3-100)/2,backgroundColor: '#32C739',borderWidth:0}} textStyle={{fontSize: 18,color:'white'}}>
+                            <Text style={[{color:'#FFFFFF',fontSize:16}]}>{this.state.signState?this.state.buttonTitle:this.state.buttonTitle}</Text>
+                        </View>
+                    </TouchableOpacity>
+
+
+                    <Text style={[{marginTop:5}]}>登录用户:{this.props.user.realname}</Text>
                 </View>
 
                 <Modal style={[styles.modal, styles.modal3]} position={"center"} ref={"modal3"} isDisabled={this.state.isDisabled}>
@@ -515,6 +533,8 @@ const styles = StyleSheet.create({
 
     }
 });
+
+
 
 
 //根据全局state返回当前页面所需要的信息,（注意以props的形式传递给AppLoginPage）
