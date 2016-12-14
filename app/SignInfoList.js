@@ -8,7 +8,9 @@ import {
     Alert
 } from 'react-native';
 //第三方组件
-import { List, ListItem } from 'react-native-elements'
+import { List,ListItem } from 'react-native-elements'
+
+
 
 /***
  * 用户信息

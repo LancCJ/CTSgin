@@ -39,6 +39,8 @@ export default class NetUtil extends Component {
                 url += '&' + paramsArray.join('&')
             }
         }
+       // console.log(url);
+
         //fetch请求
         fetch(url,{
             method: 'GET',
@@ -47,6 +49,61 @@ export default class NetUtil extends Component {
                 callback(response)
             }).done();
     }
+
+
+    static psot(url,params,callback){
+        if (params) {
+            let paramsArray = [];
+            //拼接参数
+            Object.keys(params).forEach(key => paramsArray.push(key + '=' + params[key]))
+            if (url.search(/\?/) === -1) {
+                url += '?' + paramsArray.join('&')
+            } else {
+                url += '&' + paramsArray.join('&')
+            }
+        }
+        console.log('url请求');
+        console.log(url);
+
+        //fetch请求
+        fetch(url,{
+            method: 'POST',
+        })
+            .then((response) =>
+            response.json())
+            .then((responseJSON) => {
+                callback(responseJSON)
+            }) .done();
+    }
+
+
+
+    static ptos(url,params,callback){
+        if (params) {
+            let paramsArray = [];
+            //拼接参数
+            Object.keys(params).forEach(key => paramsArray.push(key + '=' + params[key]))
+            if (url.search(/\?/) === -1) {
+                url += '?' + paramsArray.join('&')
+            } else {
+                url += '&' + paramsArray.join('&')
+            }
+        }
+        console.log('url请求');
+        console.log(url);
+
+        //fetch请求
+        fetch(url,{
+            method: 'GET',
+        })
+            .then((response) =>
+                response.json())
+            .then((responseJSON) => {
+                callback(responseJSON)
+            }) .done();
+    }
+
+
     /**
      *  post请求
      *  url:请求地址

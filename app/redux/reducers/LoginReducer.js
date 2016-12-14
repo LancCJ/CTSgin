@@ -7,7 +7,8 @@ import * as ActionTypes from '../actions/ActionTypes';
 const initialState={
     isLoggedIn:false,//登陆状态
     user:{},//用户登录信息
-    status: null//登陆操作状态 ‘done’:已登陆,'doing':正在登陆，null：没有登陆
+    status: null,//登陆操作状态 ‘done’:已登陆,'doing':正在登陆，null：没有登陆
+    msg:null
 };
 
 //reducer处理函数更新state,渲染UI(主要根据传入旧的state,)
@@ -33,7 +34,22 @@ export default function login(state=initialState,action={}){
                 isLoggedIn:false,
                 status: 'doing',
             }
-            break;
+        case ActionTypes.LOGIN_NO_USER:
+            console.log('用户不存在');
+            return {
+                ...state,
+                isLoggedIn:false,
+                status: 'error',
+                msg:action.msg
+            }
+        case ActionTypes.LOGIN_ERROR_PASSWORD:
+            console.log('账户密码不正确');
+            return {
+                ...state,
+                isLoggedIn:false,
+                status: 'error',
+                msg:action.msg
+            }
         case ActionTypes.LOGOUT:
             return Object.assign({}, state, {
                 isLoggedIn:false,

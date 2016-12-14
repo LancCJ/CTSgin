@@ -1,4 +1,4 @@
-package com.ctsgin;
+package com.cyber.ctsgin;
 
 import com.facebook.react.ReactActivity;
 

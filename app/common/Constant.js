@@ -19,10 +19,22 @@ import {
  */
 export default class Constants extends Component {
 
-    //服务器IP地址
-    static HostUrl='http://192.168.0.100:8089/api/';
-    //各个服务的请求路径
-    static UserLoginUrl=Constants.HostUrl+'user/login.json';
+    //登录服务器IP地址
+    static LoginHostUrl='http://112.124.1.34:18081/pstore/service/';
+    //签到服务器IP地址
+    static SignHostUrl='http://58.211.187.150:48888/common-app/api/MID_WORKATTENDANCE/';
+    //登录服务的请求路径
+    static UserLoginUrl=Constants.LoginHostUrl+'user/login';
+
+
+    //签到状态服务的请求路径
+    static SignStateUrl=Constants.SignHostUrl+'QID_WORKATTENDANCE_GET_STATUS_DETAIL';
+    //签到照片服务的请求路径
+    static SignPhotoUrl=Constants.SignHostUrl+'SID_WORKATTENDANCE_PHOTO_INFO';
+    //签到信息服务的请求路径
+    static SignInfoUrl=Constants.SignHostUrl+'SID_WORKATTENDANCE_BASE_INFO';
+    //签到历史服务的请求路径
+    static SignHistoryUrl=Constants.SignHostUrl+'DID_WORKATTENDANCE_HISTORY_PHOTO_INFO_DETAIL';
 }
 
 

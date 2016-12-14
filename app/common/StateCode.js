@@ -21,10 +21,8 @@ export default class StateCode extends Component {
     static   ERROR = 1;//响应失败
 
     //登录状态码
-    static   USER_LOGIN_NO_PARAMS = 103;//缺少参数
-    static   USER_LOGIN_PARAMS_NO_USERNAME = 104;//缺少用户名
-    static   USER_LOGIN_PARAMS_NO_USERPWD = 105;//缺少密码
-    static   USER_LOGIN_PARAMS_USERNAMENOTMATCHPWD = 106;//用户密码不匹配
+    static   USER_LOGIN_PARAMS_NO_USERNAME = 121001;//缺少用户名
+    static   USER_LOGIN_PARAMS_USERNAMENOTMATCHPWD = 121002;//用户密码不匹配
 }
 
 

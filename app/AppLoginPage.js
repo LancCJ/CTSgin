@@ -52,7 +52,7 @@ class AppLoginPage extends Component {
     //该方法首次不会执行，如果返回false，则reduer不会执行
     shouldComponentUpdate(nextProps,nextState){
 
-        const {isLoggedIn,user,status}=nextProps;
+        const {isLoggedIn,user,status,msg}=nextProps;
 
         if(isLoggedIn){
             //console.log('登录成功进行跳转')
@@ -65,14 +65,16 @@ class AppLoginPage extends Component {
                 rawData: {
                     user: user
                 },
-
                 // 如果不指定过期时间，则会使用defaultExpires参数
                 // 如果设为null，则永不过期
                 expires: 1000 * 3600
             });
 
-            Actions.MainPage();
+            Actions.SingMainPage({"user":user});
+        }else if(status==='error'){
+            Alert.alert(msg);
         }
+        this.refs.modal.close();//loading 状态
         return true;
     }
 
@@ -98,8 +100,8 @@ class AppLoginPage extends Component {
                         buttonStyle={{marginTop:5,height:40}}
                         title='登    录'
                         backgroundColor="#007AFF"
-                        //onPress={this.login}
-                        onPress={Actions.SingMainPage}
+                        onPress={this.login}
+                        //onPress={Actions.SingMainPage}
                     />
                     {/*<Button*/}
                         {/*buttonStyle={{marginTop:10,height:40}}*/}
@@ -171,6 +173,7 @@ function mapStateToProps(store){
         isLoggedIn:store.login.isLoggedIn,
         user:store.login.user,
         status:store.login.status,
+        msg:store.login.msg
     };
 }
 //返回可以操作store.state的actions,(其实就是我们可以通过actions来调用我们绑定好的一系列方法)
