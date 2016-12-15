@@ -104,16 +104,15 @@ class SingMainPage extends Component {
 
             doingMsg:'提交数据中...',
 
-            rank:""
+            rank:"",
+            locationName:'数据读取中'
         };
 
     }
 
-
-
-    componentDidMount() {
-       // console.log(this.props.user);
-       //获取手机当前坐标
+    componentWillMount(){
+        // console.log(this.props.user);
+        //获取手机当前坐标
         Geolocation.getCurrentPosition()
             .then(data => {
                 console.log(data);
@@ -122,7 +121,7 @@ class SingMainPage extends Component {
                     marker: {
                         latitude: data.latitude,
                         longitude: data.longitude,
-                        title: '您的位置'
+                        title: this.state.locationName
                     },
                     center: {
                         latitude: data.latitude,
@@ -135,6 +134,11 @@ class SingMainPage extends Component {
             .catch(e =>{
                 Alert.alert('获取GPS错误,请检查是否开启定位服务!')
             });
+
+        console.log('获取名称');
+
+
+
         //获取图标
         Ionicons.getImageSource('ios-add', (Dimensions.get('window').width-200)/3,'#DEDEDE').then((source) => this.setState({ addIcon: source }));
 
@@ -147,6 +151,16 @@ class SingMainPage extends Component {
         this.props.actions.signState(this.props.user);//dispath 查询签到状态
     }
 
+    componentDidMount() {
+        console.log('获取名称');
+
+
+
+
+
+
+    }
+
 
     //该方法首次不会执行，如果返回false，则reduer不会执行
     shouldComponentUpdate(nextProps,nextState){
@@ -155,7 +169,7 @@ class SingMainPage extends Component {
 
         if(rank!=null){
             this.setState({
-                rank:msg
+                rank:rank
             });
         }
 

@@ -59,8 +59,8 @@ export function Sign(pics,info){
             'pageSzie': '6'
 
         };
-
-
+        console.log('查询RANK');
+console.log(params);
                 NetUtil.ptos(Constant.SignRankUrl,params,function (result) {
                     console.log("正在查询提交完信息后的排名");
                     /**
@@ -77,6 +77,9 @@ export function Sign(pics,info){
                     }
                      *
                      */
+
+                    console.log(result.data.RANK);
+
                     dispatch({type:ActionTypes.SIGN_DONE,msg:'提交完毕',rank:result.data.RANK});
                 })
 

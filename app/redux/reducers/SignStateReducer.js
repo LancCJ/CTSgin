@@ -33,7 +33,8 @@ export default function signState(state=initialState,action={}){
             });
         case ActionTypes.SIGN_DONE:
             return Object.assign({}, state, {
-                msg:action.msg
+                msg:action.msg,
+                rank:action.rank
             });
         //切莫忘记default返回值
         default:
