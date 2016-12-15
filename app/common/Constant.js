@@ -35,6 +35,8 @@ export default class Constants extends Component {
     static SignInfoUrl=Constants.SignHostUrl+'SID_WORKATTENDANCE_BASE_INFO';
 
 
+    //签到排名服务的请求路径
+    static SignRankUrl=Constants.SignHostUrl+'QID_WORKATTENDANCE_GET_RANK_DETAIL';
     //签到历史信息服务的请求路径
     static SignHistoryInfoUrl=Constants.SignHostUrl+'QID_WORKATTENDANCE_HISTORY_INFO_BRIEF';
     //签到历史照片服务的请求路径

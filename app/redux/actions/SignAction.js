@@ -43,37 +43,82 @@ export function Sign(pics,info){
         let PHOTO_SIZE=info.PHOTO_SIZE;
 
 
-        NetUtil.ptos(Constant.SignInfoUrl,info,function (result) {
-            console.log("正在提交照片");
-            /**
-             *
-             {
-                 "seq": "c39e7a8f-b1ea-4212-b578-9d9429e3292f",
-                 "type": "ack",
-                 "ackCode": 200,
-                 "ackMsg": "提交成功"
-             }
-             *
-             */
-            console.log(result.ackCode);
+        dispatch({type:ActionTypes.SIGN_PHOTO1,msg:'提交照片数据(0/3)'});
 
-            if(result.ackCode==='200'){
-                NetUtil.ptos(Constant.SignPhotoUrl,pics.pics[0],function (result) {
-                    console.log("正在提交照片");
+        dispatch({type:ActionTypes.SIGN_PHOTO2,msg:'提交照片数据(1/3)'});
+
+        dispatch({type:ActionTypes.SIGN_PHOTO3,msg:'提交照片数据(2/3)'});
+
+        dispatch({type:ActionTypes.SIGN_INFO,msg:'提交签到数据(0/1)'});
+
+
+        let params = {
+            'TYPE':info.TYPE,
+            'USER_ID':info.USER_ID,
+            'pageIndex': '0',
+            'pageSzie': '6'
+
+        };
+
+
+                NetUtil.ptos(Constant.SignRankUrl,params,function (result) {
+                    console.log("正在查询提交完信息后的排名");
                     /**
                      *
                      {
-                         "seq": "c39e7a8f-b1ea-4212-b578-9d9429e3292f",
-                         "type": "ack",
-                         "ackCode": 200,
-                         "ackMsg": "提交成功"
-                     }
+                        "seq": "5dc9a340-d8e7-4793-a2d6-5b8e65951619",
+                        "type": "detail",
+                        "header": {
+                            "RANK": "排名"
+                        },
+                        "data": {
+                            "RANK": 2
+                        }
+                    }
                      *
                      */
-                    console.log(result.ackCode);
+                    dispatch({type:ActionTypes.SIGN_DONE,msg:'提交完毕',rank:result.data.RANK});
                 })
-            }
-        })
+
+
+
+
+
+        // NetUtil.ptos(Constant.SignInfoUrl,info,function (result) {
+        //     console.log("正在提交照片");
+        //     /**
+        //      *
+        //      {
+        //          "seq": "c39e7a8f-b1ea-4212-b578-9d9429e3292f",
+        //          "type": "ack",
+        //          "ackCode": 200,
+        //          "ackMsg": "提交成功"
+        //      }
+        //      *
+        //      */
+        //     console.log(result.ackCode);
+        //
+        //     if(result.ackCode==='200'){
+        //
+        //         console.log('测试签到上传图片');
+        //
+        //
+        //         // NetUtil.ptos(Constant.SignPhotoUrl,pics.pics[0],function (result) {
+        //         //     console.log("正在提交照片");
+        //         //     /**
+        //         //      *
+        //         //      {
+        //         //          "seq": "c39e7a8f-b1ea-4212-b578-9d9429e3292f",
+        //         //          "type": "ack",
+        //         //          "ackCode": 200,
+        //         //          "ackMsg": "提交成功"
+        //         //      }
+        //         //      *
+        //         //      */
+        //         //     console.log(result.ackCode);
+        //         // })
+        //     }
+        // })
 
 
 

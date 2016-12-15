@@ -13,3 +13,13 @@ export const SIGN_STATE = 'SIGN_STATE';//签到状态
 
 
 
+export const SIGN_PHOTO1 = 'SIGN_PHOTO1';
+export const SIGN_PHOTO2 = 'SIGN_PHOTO2';
+export const SIGN_PHOTO3 = 'SIGN_PHOTO3';
+
+export const SIGN_INFO = 'SIGN_INFO';
+export const SIGN_DONE = 'SIGN_DONE';
+
+
+
+

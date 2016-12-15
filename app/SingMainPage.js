@@ -102,7 +102,9 @@ class SingMainPage extends Component {
             openModal:false,
 
 
-            doingMsg:'提交数据中...'
+            doingMsg:'提交数据中...',
+
+            rank:""
         };
 
     }
@@ -149,7 +151,19 @@ class SingMainPage extends Component {
     //该方法首次不会执行，如果返回false，则reduer不会执行
     shouldComponentUpdate(nextProps,nextState){
 
-        const {state}=nextProps;
+        const {state,msg,rank}=nextProps;
+
+        if(rank!=null){
+            this.setState({
+                rank:msg
+            });
+        }
+
+        if(msg!=null){
+            this.setState({
+                doingMsg:msg
+            });
+        }
 
         if(state!=null){
            console.log('我在界面 获取最新的state');
@@ -231,13 +245,23 @@ class SingMainPage extends Component {
 
         if(this.state.avatarSource1){
             PicParams={
+
                 "pics":{
-                    'COMMIT_TIME':moment().format('YYYY-MM-DD hh:mm:ss'),
-                    'CRRELATION_ID':	infoUUID,//对应的信息ID
+                    'COMMIT_TIME':'2016-12-15 08:28:40',
+                    'CRRELATION_ID':	'1282fec7-4e77-4547-8a2b-c8e221b873da',//对应的信息ID
                     'SEQ':	JSUtil.uuid(),
                     'ZP':this.state.base64image1,
-                    'XH':'0'
+                    'XH':'1'
                 }
+
+//上面的是测试数据
+                // "pics":{
+                //     'COMMIT_TIME':moment().format('YYYY-MM-DD hh:mm:ss'),
+                //     'CRRELATION_ID':	infoUUID,//对应的信息ID
+                //     'SEQ':	JSUtil.uuid(),
+                //     'ZP':this.state.base64image1,
+                //     'XH':'0'
+                // }
             }
             if(this.state.avatarSource2){
                 PicParams={
@@ -299,7 +323,7 @@ class SingMainPage extends Component {
 
             console.log(infoParams);
 
-            //this.props.actions.Sign(PicParams,infoParams);//dispath 签到签出
+            this.props.actions.Sign(PicParams,infoParams);//dispath 签到签出
 
             //超过时间 需要填写原因
             //this.refs.modal3.open();
@@ -509,7 +533,7 @@ class SingMainPage extends Component {
                 <View style={styles.button}>
                     <TouchableOpacity onPress={this._Sign.bind(this)} >
                         <View style={{ justifyContent:"center",alignItems:"center",width:Dimensions.get('window').height /3-100,height:Dimensions.get('window').height /3-100,borderRadius:(Dimensions.get('window').height /3-100)/2,backgroundColor:this.state.btnbackground,borderWidth:10,borderColor:'#DEDEDE'}} textStyle={{fontSize: 18,color:'white'}}>
-                            <Text style={[{color:'#FFFFFF',fontSize:25}]}>{this.state.signState?this.state.buttonTitle:this.state.buttonTitle}</Text>
+                            <Text style={[{color:'#FFFFFF',fontSize:23}]}>{this.state.signState?this.state.buttonTitle:this.state.buttonTitle}</Text>
                         </View>
                     </TouchableOpacity>
 
@@ -540,8 +564,25 @@ class SingMainPage extends Component {
                        backgroundColor: 'rgba(0, 0, 0, 0)'
                     }}>
 
-                    <Spinner style={styles.spinner} isVisible={this.state.openModal} size={this.state.spinnersize} type='Bounce' color={this.state.spinnercolor}/>
-                    <Text style={[{color:'#FFFFFF',fontSize:15}]}>{this.state.doingMsg}</Text>
+                    {this.state.doingMsg==='提交完毕'?(
+                    <View style={styles.signDone}>
+                        <Image
+                            style={styles.signDonePic}
+                            source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}
+                        />
+                        <View style={styles.signDoneText}>
+                            <Text style={{fontSize:20}}>第{this.state.rank}个上班打卡成功</Text>
+                            <Text style={{marginTop:10,fontSize:20}}>2016年12月15日16:19:59</Text>
+                            <Text style={{marginTop:10,fontSize:20,color:'#DEDEDE'}}>XXXXXXXXXXX</Text>
+                        </View>
+
+                    </View>
+                    ):(<View>
+                        <Spinner style={styles.spinner} isVisible={this.state.openModal} size={this.state.spinnersize} type='Bounce' color={this.state.spinnercolor}/>
+                        <Text style={styles.doingMsg}>{this.state.doingMsg}</Text>
+                    </View>)}
+
+
                 </Modal>
 
             </View>
@@ -589,6 +630,21 @@ const styles = StyleSheet.create({
     },
     spinner:{
 
+    },
+    doingMsg:{
+        color:'#FFFFFF',fontSize:15
+    },
+    signDone:{
+        height:Dimensions.get('window').height/2,
+        width:(Dimensions.get('window').width-50),
+        backgroundColor:'#FFFFFF'
+    },signDonePic:{
+        flex:5
+    },signDoneText:{
+        flex:3,
+        justifyContent:'center',
+        alignItems:'center'
+
     }
 });
 
@@ -598,7 +654,9 @@ const styles = StyleSheet.create({
 //根据全局state返回当前页面所需要的信息,（注意以props的形式传递给AppLoginPage）
 function mapStateToProps(store){
     return{
-        state:store.signState.state
+        state:store.signState.state,
+        msg:store.signState.msg,
+        rank:store.signState.rank
     };
 }
 //返回可以操作store.state的actions,(其实就是我们可以通过actions来调用我们绑定好的一系列方法)
