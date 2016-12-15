@@ -33,8 +33,12 @@ export default class Constants extends Component {
     static SignPhotoUrl=Constants.SignHostUrl+'SID_WORKATTENDANCE_PHOTO_INFO';
     //签到信息服务的请求路径
     static SignInfoUrl=Constants.SignHostUrl+'SID_WORKATTENDANCE_BASE_INFO';
-    //签到历史服务的请求路径
-    static SignHistoryUrl=Constants.SignHostUrl+'DID_WORKATTENDANCE_HISTORY_PHOTO_INFO_DETAIL';
+
+
+    //签到历史信息服务的请求路径
+    static SignHistoryInfoUrl=Constants.SignHostUrl+'QID_WORKATTENDANCE_HISTORY_INFO_BRIEF';
+    //签到历史照片服务的请求路径
+    static SignHistoryPhotoUrl=Constants.SignHostUrl+'DID_WORKATTENDANCE_HISTORY_PHOTO_INFO_DETAIL';
 }
 
 
