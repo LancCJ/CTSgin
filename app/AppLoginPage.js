@@ -9,7 +9,8 @@ import {
     View,
     Image,
     Alert,
-    TouchableOpacity
+    TouchableOpacity,
+    Keyboard
 } from 'react-native';
 
 //第三方
@@ -40,7 +41,7 @@ class AppLoginPage extends Component {
     }
 
     _login(){
-
+        Keyboard.dismiss();
         if(!this.state.userName||!this.state.userPwd){
             Alert.alert('用户名或密码不能为空！');
         }else{

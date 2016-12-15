@@ -111,15 +111,7 @@ class SingMainPage extends Component {
 
     componentDidMount() {
        // console.log(this.props.user);
-
-
-
-
-
-
-
-
-        //获取手机当前坐标
+       //获取手机当前坐标
         Geolocation.getCurrentPosition()
             .then(data => {
                 console.log(data);
@@ -144,7 +136,7 @@ class SingMainPage extends Component {
         //获取图标
         Ionicons.getImageSource('ios-add', (Dimensions.get('window').width-200)/3,'#DEDEDE').then((source) => this.setState({ addIcon: source }));
 
-        Ionicons.getImageSource('close-circle', 10,'#FF0000').then((source) => this.setState({ deleteIcon: source }));
+        Ionicons.getImageSource('ios-close-circle', 50,'#FF0000').then((source) => this.setState({ deleteIcon: source }));
 
 
         //获取登录用户的签到状态然后来加载按钮文字
@@ -465,10 +457,6 @@ class SingMainPage extends Component {
         });
     }
 
-    toggleDisable() {
-        this.setState({isDisabled: !this.state.isDisabled});
-    }
-
     render() {
         return (
             <View style={styles.container}>
@@ -486,11 +474,11 @@ class SingMainPage extends Component {
                 </MapView>
 
                 <View style={[styles.center,{borderWidth:0}]}>
-                    <View style={{borderBottomWidth:1,borderBottomColor:'#0086F6',height:25}}>
+                    <View style={{borderBottomWidth:1,borderBottomColor:'#DEDEDE',height:25}}>
                         <Text style={{marginLeft:50,fontSize:20}}>现场照片</Text>
                     </View>
 
-                    <View style={{padding:15,flex:1,borderBottomWidth:1,borderBottomColor:'#0086F6',flexDirection:'row',marginTop:5,justifyContent:this.state.justifyContentStyle,alignItems:'center'}}>
+                    <View style={{padding:15,flex:1,borderBottomWidth:1,borderBottomColor:'#DEDEDE',flexDirection:'row',marginTop:5,justifyContent:this.state.justifyContentStyle,alignItems:'center'}}>
 
                         <TouchableOpacity onPress={this.state.avatarSource1?null:this.selectPhotoTapped1.bind(this)}>
                             <View style={{height:(Dimensions.get('window').width-100)/3,width:(Dimensions.get('window').width-100)/3,borderWidth:1,borderStyle:'dashed',justifyContent:'center',alignItems:'center'}}>
@@ -520,13 +508,16 @@ class SingMainPage extends Component {
 
                 <View style={styles.button}>
                     <TouchableOpacity onPress={this._Sign.bind(this)} >
-                        <View style={{ justifyContent:"center",alignItems:"center",width:Dimensions.get('window').height /3-100,height:Dimensions.get('window').height /3-100,borderRadius:(Dimensions.get('window').height /3-100)/2,backgroundColor:this.state.btnbackground,borderWidth:0}} textStyle={{fontSize: 18,color:'white'}}>
+                        <View style={{ justifyContent:"center",alignItems:"center",width:Dimensions.get('window').height /3-100,height:Dimensions.get('window').height /3-100,borderRadius:(Dimensions.get('window').height /3-100)/2,backgroundColor:this.state.btnbackground,borderWidth:10,borderColor:'#DEDEDE'}} textStyle={{fontSize: 18,color:'white'}}>
                             <Text style={[{color:'#FFFFFF',fontSize:25}]}>{this.state.signState?this.state.buttonTitle:this.state.buttonTitle}</Text>
                         </View>
                     </TouchableOpacity>
 
 
-                    <Text style={[{marginTop:5}]}>登录用户:{this.props.user.realname}</Text>
+                </View>
+
+                <View style={[{backgroundColor:'#0584FE',height:250,flex:1,justifyContent:'center',alignItems:'center'}]}>
+                    <Text style={[{color:'#FFFFFF',textAlign:'center',lineHeight:18,fontSize:18}]}>登录用户:{this.props.user.realname}</Text>
                 </View>
 
                 <Modal
