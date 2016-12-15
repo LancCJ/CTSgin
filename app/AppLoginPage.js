@@ -85,7 +85,7 @@ class AppLoginPage extends Component {
                     <FormLabel>用户名:</FormLabel>
                     <FormInput
                         style={[styles.textInput,{marginTop:2}]}
-                        placeholder='    用户名或手机号或邮箱'
+                        placeholder='    在此输入用户名'
                         //value='lanccj'
                         onChangeText={this.onChangeUserName}
                     />
@@ -94,10 +94,11 @@ class AppLoginPage extends Component {
                         style={[styles.textInput,{marginTop:2}]}
                         secureTextEntry={true}
                         //value='123456'
+                        placeholder='    在此输入密码'
                         onChangeText={this.onChangePswd}
                     />
                     <Button
-                        buttonStyle={{marginTop:5,height:40}}
+                        buttonStyle={{marginTop:10,height:40}}
                         title='登    录'
                         backgroundColor="#007AFF"
                         onPress={this.login}

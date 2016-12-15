@@ -25,6 +25,13 @@ import {
 
 import Dimensions from 'Dimensions';
 
+import JSUtil from './common/utils/JSUtil';
+
+import moment from './common/utils/moment';
+
+
+
+var Spinner = require('react-native-spinkit');
 import { Icon,SocialIcon } from 'react-native-elements'
 import Button from 'apsl-react-native-button'
 
@@ -35,7 +42,9 @@ var base64Icon = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEsAAABLCAQAAACS
 var Platform = require('react-native').Platform;
 var ImagePicker = require('react-native-image-picker');
 import {Actions} from 'react-native-router-flux';
-var Modal = require('react-native-modalbox');
+
+import Modal from 'react-native-simple-modal';
+
 
 // More info on all the options is below in the README...just some common use cases shown here
 var options = {
@@ -69,7 +78,7 @@ class SingMainPage extends Component {
             sliderValue: 0.3,
 
             justifyContentStyle:'space-between',
-            buttonTitle:'正在加载...',
+            buttonTitle:'正在\n加载',
             buttonisDisabled:false,
 
             signState:null,
@@ -82,7 +91,18 @@ class SingMainPage extends Component {
 
             base64image1:null,
             base64image2:null,
-            base64image3:null
+            base64image3:null,
+
+            btnbackground:'#32C739',
+
+            spinnerisDisabled:false,
+            spinnersize:100,
+            spinnercolor:'#32C739',
+
+            openModal:false,
+
+
+            doingMsg:'提交数据中...'
         };
 
     }
@@ -91,6 +111,13 @@ class SingMainPage extends Component {
 
     componentDidMount() {
        // console.log(this.props.user);
+
+
+
+
+
+
+
 
         //获取手机当前坐标
         Geolocation.getCurrentPosition()
@@ -117,6 +144,9 @@ class SingMainPage extends Component {
         //获取图标
         Ionicons.getImageSource('ios-add', (Dimensions.get('window').width-200)/3,'#DEDEDE').then((source) => this.setState({ addIcon: source }));
 
+        Ionicons.getImageSource('close-circle', 10,'#FF0000').then((source) => this.setState({ deleteIcon: source }));
+
+
         //获取登录用户的签到状态然后来加载按钮文字
         console.log(this.props.user);
         //console.log('查询'+this.props.user.realname+'的签到状态');
@@ -137,19 +167,20 @@ class SingMainPage extends Component {
             if(state.data.STATUS==="-1"){
                 console.log('111111');
                 this.setState({
-                    buttonTitle: "打卡上班咯！",
+                    buttonTitle: "上班\n打卡",
                     signState:'-1'
                 });
             }else  if(state.data.STATUS==="0"){
                 console.log('222222');
                 this.setState({
-                    buttonTitle: "打卡下班啦！",
-                    signState:'0'
+                    buttonTitle: "下班\n打卡",
+                    signState:'0',
+                    btnbackground:'#EA7A00'
                 });
             }else  if(state.data.STATUS==="1"){
                 console.log('333333');
                 this.setState({
-                    buttonTitle: "全部完成！",
+                    buttonTitle: "全部\n完成",
                     signState:'1',
                     buttonisDisabled:true
                 });
@@ -162,6 +193,9 @@ class SingMainPage extends Component {
     }
 
     _Sign(){
+
+
+
 
         console.log(this.state);
 
@@ -182,6 +216,7 @@ class SingMainPage extends Component {
             }
         }
 
+        let infoUUID=JSUtil.uuid();
 
     //文本信息
 
@@ -190,7 +225,7 @@ class SingMainPage extends Component {
             'ADDRESS':	'中国江苏省苏州市虎丘区新元街199号',
             'REMARKS':	REMARKS,
             'USER_ID':	this.props.user.username,
-            'SEQ':	'7ae6f163-92ff-4981-9467-29340cc4cc80',
+            'SEQ':	infoUUID,
             'PHOTO_SIZE':	PHOTO_SIZE,
             'TYPE':this.state.signState,
             'DEPT_ID':	this.props.user.deptId,
@@ -205,9 +240,9 @@ class SingMainPage extends Component {
         if(this.state.avatarSource1){
             PicParams={
                 "pics":{
-                    'COMMIT_TIME':(new Date()).valueOf().format("yyyy-MM-dd HH:mm:ss"),
-                    'CRRELATION_ID':	'7ae6f163-92ff-4981-9467-29340cc4cc80',//对应的信息ID
-                    'SEQ':	'd70732bd-43cf-4c0f-8fb9-83b3bc1700b2',
+                    'COMMIT_TIME':moment().format('YYYY-MM-DD hh:mm:ss'),
+                    'CRRELATION_ID':	infoUUID,//对应的信息ID
+                    'SEQ':	JSUtil.uuid(),
                     'ZP':this.state.base64image1,
                     'XH':'0'
                 }
@@ -215,16 +250,16 @@ class SingMainPage extends Component {
             if(this.state.avatarSource2){
                 PicParams={
                     "pics":[{
-                        'COMMIT_TIME':(new Date()).valueOf(),
-                        'CRRELATION_ID':	'7ae6f163-92ff-4981-9467-29340cc4cc80',//对应的信息ID
-                        'SEQ':	'd70732bd-43cf-4c0f-8fb9-83b3bc1700b2',
+                        'COMMIT_TIME':moment().format('YYYY-MM-DD hh:mm:ss'),
+                        'CRRELATION_ID':	infoUUID,//对应的信息ID
+                        'SEQ':	JSUtil.uuid(),
                         'ZP':this.state.base64image1,
                         'XH':'0'
                     },
                     {
-                        'COMMIT_TIME':(new Date()).valueOf(),
-                        'CRRELATION_ID':	'7ae6f163-92ff-4981-9467-29340cc4cc80',//对应的信息ID
-                        'SEQ':	'd70732bd-43cf-4c0f-8fb9-83b3bc1700b2',
+                        'COMMIT_TIME':moment().format('YYYY-MM-DD hh:mm:ss'),
+                        'CRRELATION_ID':	infoUUID,//对应的信息ID
+                        'SEQ':	JSUtil.uuid(),
                         'ZP':this.state.base64image2,
                         'XH':'1'
                     }]
@@ -233,23 +268,23 @@ class SingMainPage extends Component {
                 if(this.state.avatarSource3){
                     PicParams={
                         "pics":[{
-                            'COMMIT_TIME':(new Date()).valueOf(),
-                            'CRRELATION_ID':	'7ae6f163-92ff-4981-9467-29340cc4cc80',//对应的信息ID
-                            'SEQ':	'd70732bd-43cf-4c0f-8fb9-83b3bc1700b2',
+                            'COMMIT_TIME':moment().format('YYYY-MM-DD hh:mm:ss'),
+                            'CRRELATION_ID':	infoUUID,//对应的信息ID
+                            'SEQ':	JSUtil.uuid(),
                             'ZP':this.state.base64image1,
                             'XH':'0'
                         },
                         {
-                            'COMMIT_TIME':(new Date()).valueOf(),
-                            'CRRELATION_ID':	'7ae6f163-92ff-4981-9467-29340cc4cc80',//对应的信息ID
-                            'SEQ':	'd70732bd-43cf-4c0f-8fb9-83b3bc1700b2',
+                            'COMMIT_TIME':moment().format('YYYY-MM-DD hh:mm:ss'),
+                            'CRRELATION_ID':	infoUUID,//对应的信息ID
+                            'SEQ':	JSUtil.uuid(),
                             'ZP':this.state.base64image2,
                             'XH':'1'
                         },
                         {
-                            'COMMIT_TIME':(new Date()).valueOf(),
-                            'CRRELATION_ID':	'7ae6f163-92ff-4981-9467-29340cc4cc80',//对应的信息ID
-                            'SEQ':	'd70732bd-43cf-4c0f-8fb9-83b3bc1700b2',
+                            'COMMIT_TIME':moment().format('YYYY-MM-DD hh:mm:ss'),
+                            'CRRELATION_ID':	infoUUID,//对应的信息ID
+                            'SEQ':	JSUtil.uuid(),
                             'ZP':this.state.base64image3,
                             'XH':'2'
                         }
@@ -265,15 +300,14 @@ class SingMainPage extends Component {
             Alert.alert('现场照片至少一张');
         }else{
 
+            this.setState({openModal:true});
+
             console.log('打卡前参数准备如下....');
             console.log(PicParams);
 
             console.log(infoParams);
 
-
-
-
-            //this.props.actions.sign(PicParams,infoParams);//dispath 签到签出
+            //this.props.actions.Sign(PicParams,infoParams);//dispath 签到签出
 
             //超过时间 需要填写原因
             //this.refs.modal3.open();
@@ -285,6 +319,10 @@ class SingMainPage extends Component {
     selectPhotoTapped1() {
         const options = {
             quality: 1.0,
+            title:'选择现场照片',
+            takePhotoButtonTitle:'立即拍照',
+            chooseFromLibraryButtonTitle:'从相册选择',
+            cancelButtonTitle:'取消',
             maxWidth: 500,
             maxHeight: 500,
             storageOptions: {
@@ -334,6 +372,10 @@ class SingMainPage extends Component {
     selectPhotoTapped2() {
         const options = {
             quality: 1.0,
+            title:'选择现场照片',
+            takePhotoButtonTitle:'立即拍照',
+            chooseFromLibraryButtonTitle:'从相册选择',
+            cancelButtonTitle:'取消',
             maxWidth: 500,
             maxHeight: 500,
             storageOptions: {
@@ -379,6 +421,10 @@ class SingMainPage extends Component {
     selectPhotoTapped3() {
         const options = {
             quality: 1.0,
+            title:'选择现场照片',
+            takePhotoButtonTitle:'立即拍照',
+            chooseFromLibraryButtonTitle:'从相册选择',
+            cancelButtonTitle:'取消',
             maxWidth: 500,
             maxHeight: 500,
             storageOptions: {
@@ -448,7 +494,9 @@ class SingMainPage extends Component {
 
                         <TouchableOpacity onPress={this.state.avatarSource1?null:this.selectPhotoTapped1.bind(this)}>
                             <View style={{height:(Dimensions.get('window').width-100)/3,width:(Dimensions.get('window').width-100)/3,borderWidth:1,borderStyle:'dashed',justifyContent:'center',alignItems:'center'}}>
-                                <Image source={this.state.avatarSource1?this.state.avatarSource1:this.state.addIcon} style={styles.image} />
+                                <Image source={this.state.avatarSource1?this.state.avatarSource1:this.state.addIcon} style={styles.image} >
+                                    <Image source={this.state.deleteIcon} style={[{alignSelf:'flex-end'}]} />
+                                </Image>
                             </View>
                         </TouchableOpacity>
 
@@ -471,13 +519,9 @@ class SingMainPage extends Component {
                 </View>
 
                 <View style={styles.button}>
-
-                    {/*<Button  isDisabled={this.state.buttonisDisabled} onPress={this._Sign.bind(this)} style={{ justifyContent:"center",alignItems:"center",width:Dimensions.get('window').height /3-100,height:Dimensions.get('window').height /3-100,borderRadius:(Dimensions.get('window').height /3-100)/2,backgroundColor: '#32C739',borderWidth:0}} textStyle={{fontSize: 18,color:'white'}}>*/}
-                        {/*{this.state.buttonTitle}*/}
-                    {/*</Button>*/}
                     <TouchableOpacity onPress={this._Sign.bind(this)} >
-                        <View style={{ justifyContent:"center",alignItems:"center",width:Dimensions.get('window').height /3-100,height:Dimensions.get('window').height /3-100,borderRadius:(Dimensions.get('window').height /3-100)/2,backgroundColor: '#32C739',borderWidth:0}} textStyle={{fontSize: 18,color:'white'}}>
-                            <Text style={[{color:'#FFFFFF',fontSize:16}]}>{this.state.signState?this.state.buttonTitle:this.state.buttonTitle}</Text>
+                        <View style={{ justifyContent:"center",alignItems:"center",width:Dimensions.get('window').height /3-100,height:Dimensions.get('window').height /3-100,borderRadius:(Dimensions.get('window').height /3-100)/2,backgroundColor:this.state.btnbackground,borderWidth:0}} textStyle={{fontSize: 18,color:'white'}}>
+                            <Text style={[{color:'#FFFFFF',fontSize:25}]}>{this.state.signState?this.state.buttonTitle:this.state.buttonTitle}</Text>
                         </View>
                     </TouchableOpacity>
 
@@ -485,9 +529,28 @@ class SingMainPage extends Component {
                     <Text style={[{marginTop:5}]}>登录用户:{this.props.user.realname}</Text>
                 </View>
 
-                <Modal style={[styles.modal, styles.modal3]} position={"center"} ref={"modal3"} isDisabled={this.state.isDisabled}>
-                    <Text style={styles.text}>Modal centered</Text>
-                    <Button onPress={this.toggleDisable} style={styles.btn}>Disable ({this.state.isDisabled ? "true" : "false"})</Button>
+                <Modal
+                    offset={this.state.offsetModal}
+                    open={this.state.openModal}
+                    overlayBackground={'rgba(0, 0, 0, 0.75)'}
+                    animationDuration={200}
+                    animationTension={40}
+                    modalDidOpen={() => this.setState({openModal:true})}
+                    modalDidClose={() => this.setState({openModal:false})}
+                    closeOnTouchOutside={true}
+                    containerStyle={{
+                       justifyContent: 'center',
+                       alignItems:'center'
+                    }}
+                                    modalStyle={{
+                       borderRadius: 2,
+                       margin: 20,
+                       padding: 10,
+                       backgroundColor: 'rgba(0, 0, 0, 0)'
+                    }}>
+
+                    <Spinner style={styles.spinner} isVisible={this.state.openModal} size={this.state.spinnersize} type='Bounce' color={this.state.spinnercolor}/>
+                    <Text style={[{color:'#FFFFFF',fontSize:15}]}>{this.state.doingMsg}</Text>
                 </Modal>
 
             </View>
@@ -520,6 +583,7 @@ const styles = StyleSheet.create({
     image:{
         height: (Dimensions.get('window').width-100)/3,
         width:(Dimensions.get('window').width-100)/3,
+        alignSelf:'center'//自身中间对齐
         //borderWidth:1
     },
     modal: {
@@ -530,6 +594,9 @@ const styles = StyleSheet.create({
 
     },
     uploadAvatar:{
+
+    },
+    spinner:{
 
     }
 });

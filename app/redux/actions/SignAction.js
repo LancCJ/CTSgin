@@ -31,43 +31,52 @@ export function signState(user){
     }
 }
 
-export function sign(pics,info){
-    console.log('action-用户签到签退动作');
+export function Sign(pics,info){
+    console.log('=====action-用户签到签退动作=======');
     return (dispatch)=>{
+        console.log(pics);
+        console.log(info);
 
-        //照片参数循环
+        //得出图片张数
+        console.log(info.PHOTO_SIZE);
 
-        /**
-         * {
-         *
-         * }
-         * */
-
+        let PHOTO_SIZE=info.PHOTO_SIZE;
 
 
+        NetUtil.ptos(Constant.SignInfoUrl,info,function (result) {
+            console.log("正在提交照片");
+            /**
+             *
+             {
+                 "seq": "c39e7a8f-b1ea-4212-b578-9d9429e3292f",
+                 "type": "ack",
+                 "ackCode": 200,
+                 "ackMsg": "提交成功"
+             }
+             *
+             */
+            console.log(result.ackCode);
 
-
-
-
-
-        //处理参数
-        let params = {
-            'USER_ID':user.username,
-            //'USER_ID':'chenj',
-            'pageIndex':'0',
-            'pageSize': '6'
-        };
-
-        // let testJson=require('./state.json');
-        //  console.log(testJson)
-
-        NetUtil.ptos(Constant.SignStateUrl,params,function (result) {
-
-            console.log(result);
-            //
-            dispatch({type:ActionTypes.SIGN_STATE,state:result});
-
+            if(result.ackCode==='200'){
+                NetUtil.ptos(Constant.SignPhotoUrl,pics.pics[0],function (result) {
+                    console.log("正在提交照片");
+                    /**
+                     *
+                     {
+                         "seq": "c39e7a8f-b1ea-4212-b578-9d9429e3292f",
+                         "type": "ack",
+                         "ackCode": 200,
+                         "ackMsg": "提交成功"
+                     }
+                     *
+                     */
+                    console.log(result.ackCode);
+                })
+            }
         })
+
+
+
 
     }
 }
