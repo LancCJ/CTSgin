@@ -29,7 +29,7 @@ import JSUtil from './common/utils/JSUtil';
 
 import moment from './common/utils/moment';
 
-
+import watermark from 'react-native-watermark'
 
 var Spinner = require('react-native-spinkit');
 import { Icon,SocialIcon } from 'react-native-elements'
@@ -337,7 +337,7 @@ class SingMainPage extends Component {
 
             console.log(infoParams);
 
-            this.props.actions.Sign(PicParams,infoParams);//dispath 签到签出
+            //this.props.actions.Sign(PicParams,infoParams);//dispath 签到签出
 
             //超过时间 需要填写原因
             //this.refs.modal3.open();
@@ -384,6 +384,11 @@ class SingMainPage extends Component {
                 } else {
                     source = {uri: response.uri.replace('file://', ''), isStatic: true};
                 }
+
+                console.log('添加水印')
+
+                //添加水印
+
 
                 this.setState({
                     avatarSource1: source,

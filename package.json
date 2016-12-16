@@ -20,6 +20,7 @@
     "react-native-spinkit": "^0.1.5",
     "react-native-storage": "^0.1.4",
     "react-native-vector-icons": "^3.0.0",
+    "react-native-watermark": "0.0.1",
     "react-redux": "^4.4.6",
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",
