@@ -78,9 +78,12 @@ console.log(params);
                      *
                      */
 
-                    console.log(result.data.RANK);
+                    //console.log(result.data.RANK);
 
-                    dispatch({type:ActionTypes.SIGN_DONE,msg:'提交完毕',rank:result.data.RANK});
+                    //dispatch({type:ActionTypes.SIGN_DONE,msg:'提交完毕',rank:result.data.RANK});
+
+
+                    dispatch({type:ActionTypes.SIGN_DONE,msg:'提交完毕',rank:'1'});
                 })
 
 

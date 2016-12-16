@@ -519,8 +519,8 @@ class SingMainPage extends Component {
                     <View style={{padding:15,flex:1,borderBottomWidth:1,borderBottomColor:'#DEDEDE',flexDirection:'row',marginTop:5,justifyContent:this.state.justifyContentStyle,alignItems:'center'}}>
 
                         <TouchableOpacity onPress={this.state.avatarSource1?null:this.selectPhotoTapped1.bind(this)}>
-                            <View style={{height:(Dimensions.get('window').width-100)/3,width:(Dimensions.get('window').width-100)/3,borderWidth:1,borderStyle:'dashed',justifyContent:'center',alignItems:'center'}}>
-                                <Image source={this.state.avatarSource1?this.state.avatarSource1:this.state.addIcon} style={styles.image} >
+                            <View style={{height:(Dimensions.get('window').width-100)/3,width:(Dimensions.get('window').width-100)/3,borderWidth:0,borderStyle:'dashed',justifyContent:'center',alignItems:'center'}}>
+                                <Image source={this.state.avatarSource1?this.state.avatarSource1:require('../images/btn_add_photo_normal.png')} style={styles.image} >
                                     <Image source={this.state.deleteIcon} style={[{alignSelf:'flex-end'}]} />
                                 </Image>
                             </View>
@@ -528,16 +528,16 @@ class SingMainPage extends Component {
 
                         {this.state.base64image1?(
                             <TouchableOpacity onPress={this.state.avatarSource2?null:this.selectPhotoTapped2.bind(this)}>
-                                <View style={{height:(Dimensions.get('window').width-100)/3,width:(Dimensions.get('window').width-100)/3,borderWidth:1,borderStyle:'dashed',justifyContent:'center',alignItems:'center'}}>
-                                    <Image source={this.state.avatarSource2?this.state.avatarSource2:this.state.addIcon} style={styles.image} />
+                                <View style={{height:(Dimensions.get('window').width-100)/3,width:(Dimensions.get('window').width-100)/3,borderWidth:0,borderStyle:'dashed',justifyContent:'center',alignItems:'center'}}>
+                                    <Image source={this.state.avatarSource2?this.state.avatarSource2:require('../images/btn_add_photo_normal.png')} style={styles.image} />
                                 </View>
                             </TouchableOpacity>
                         ):(null)}
 
                         {this.state.base64image2?(
                             <TouchableOpacity onPress={this.state.avatarSource3?null:this.selectPhotoTapped3.bind(this)}>
-                                <View style={{height:(Dimensions.get('window').width-100)/3,width:(Dimensions.get('window').width-100)/3,borderWidth:1,borderStyle:'dashed',justifyContent:'center',alignItems:'center'}}>
-                                    <Image source={this.state.avatarSource3?this.state.avatarSource3:this.state.addIcon} style={styles.image} />
+                                <View style={{height:(Dimensions.get('window').width-100)/3,width:(Dimensions.get('window').width-100)/3,borderWidth:0,borderStyle:'dashed',justifyContent:'center',alignItems:'center'}}>
+                                    <Image source={this.state.avatarSource3?this.state.avatarSource3:require('../images/btn_add_photo_normal.png')} style={styles.image} />
                                 </View>
                             </TouchableOpacity>
                         ):(null)}
@@ -582,7 +582,7 @@ class SingMainPage extends Component {
                     <View style={styles.signDone}>
                         <Image
                             style={styles.signDonePic}
-                            source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}
+                            source={require('../images/ic_checkin_green.png')}
                         />
                         <View style={styles.signDoneText}>
                             <Text style={{fontSize:20}}>第{this.state.rank}个上班打卡成功</Text>
@@ -651,11 +651,16 @@ const styles = StyleSheet.create({
     signDone:{
         height:Dimensions.get('window').height/2,
         width:(Dimensions.get('window').width-50),
-        backgroundColor:'#FFFFFF'
+        backgroundColor:'#FFFFFF',
+        justifyContent:'center',
+        alignItems:'center'
     },signDonePic:{
-        flex:5
+        marginTop:10,
+        width:155,
+        height:180,
+        flex:3
     },signDoneText:{
-        flex:3,
+        flex:2,
         justifyContent:'center',
         alignItems:'center'
 
