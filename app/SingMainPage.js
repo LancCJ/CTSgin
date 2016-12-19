@@ -10,7 +10,8 @@ import {
     Image,
     ListView,
     Alert,
-    TouchableOpacity
+    TouchableOpacity,
+NativeModules
 } from 'react-native';
 
 import {connect} from 'react-redux';//将我们的页面和action链接起来
@@ -36,8 +37,6 @@ import { Icon,SocialIcon } from 'react-native-elements'
 import Button from 'apsl-react-native-button'
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
-var base64Icon = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEsAAABLCAQAAACSR7JhAAADtUlEQVR4Ac3YA2Bj6QLH0XPT1Fzbtm29tW3btm3bfLZtv7e2ObZnms7d8Uw098tuetPzrxv8wiISrtVudrG2JXQZ4VOv+qUfmqCGGl1mqLhoA52oZlb0mrjsnhKpgeUNEs91Z0pd1kvihA3ULGVHiQO2narKSHKkEMulm9VgUyE60s1aWoMQUbpZOWE+kaqs4eLEjdIlZTcFZB0ndc1+lhB1lZrIuk5P2aib1NBpZaL+JaOGIt0ls47SKzLC7CqrlGF6RZ09HGoNy1lYl2aRSWL5GuzqWU1KafRdoRp0iOQEiDzgZPnG6DbldcomadViflnl/cL93tOoVbsOLVM2jylvdWjXolWX1hmfZbGR/wjypDjFLSZIRov09BgYmtUqPQPlQrPapecLgTIy0jMgPKtTeob2zWtrGH3xvjUkPCtNg/tm1rjwrMa+mdUkPd3hWbH0jArPGiU9ufCsNNWFZ40wpwn+62/66R2RUtoso1OB34tnLOcy7YB1fUdc9e0q3yru8PGM773vXsuZ5YIZX+5xmHwHGVvlrGPN6ZSiP1smOsMMde40wKv2VmwPPVXNut4sVpUreZiLBHi0qln/VQeI/LTMYXpsJtFiclUN+5HVZazim+Ky+7sAvxWnvjXrJFneVtLWLyPJu9K3cXLWeOlbMTlrIelbMDlrLenrjEQOtIF+fuI9xRp9ZBFp6+b6WT8RrxEpdK64BuvHgDk+vUy+b5hYk6zfyfs051gRoNO1usU12WWRWL73/MMEy9pMi9qIrR4ZpV16Rrvduxazmy1FSvuFXRkqTnE7m2kdb5U8xGjLw/spRr1uTov4uOgQE+0N/DvFrG/Jt7i/FzwxbA9kDanhf2w+t4V97G8lrT7wc08aA2QNUkuTfW/KimT01wdlfK4yEw030VfT0RtZbzjeMprNq8m8tnSTASrTLti64oBNdpmMQm0eEwvfPwRbUBywG5TzjPCsdwk3IeAXjQblLCoXnDVeoAz6SfJNk5TTzytCNZk/POtTSV40NwOFWzw86wNJRpubpXsn60NJFlHeqlYRbslqZm2jnEZ3qcSKgm0kTli3zZVS7y/iivZTweYXJ26Y+RTbV1zh3hYkgyFGSTKPfRVbRqWWVReaxYeSLarYv1Qqsmh1s95S7G+eEWK0f3jYKTbV6bOwepjfhtafsvUsqrQvrGC8YhmnO9cSCk3yuY984F1vesdHYhWJ5FvASlacshUsajFt2mUM9pqzvKGcyNJW0arTKN1GGGzQlH0tXwLDgQTurS8eIQAAAABJRU5ErkJggg==';
 
 var Platform = require('react-native').Platform;
 var ImagePicker = require('react-native-image-picker');
@@ -105,17 +104,30 @@ class SingMainPage extends Component {
             doingMsg:'提交数据中...',
 
             rank:"",
-            locationName:'数据读取中'
+            locationName:'数据读取中',
+
+            commitPic1time:null,
+            commitPic2time:null,
+            commitPic3time:null
+
         };
 
     }
 
     componentWillMount(){
+
+
+        //获取登录用户的签到状态然后来加载按钮文字
+        console.log(this.props.user);
+        //console.log('查询'+this.props.user.realname+'的签到状态');
+        this.props.actions.signState(this.props.user);//dispath 查询签到状态
+
         // console.log(this.props.user);
         //获取手机当前坐标
         Geolocation.getCurrentPosition()
             .then(data => {
                 console.log(data);
+
                 this.setState({
                     zoom: 20,
                     marker: {
@@ -130,6 +142,22 @@ class SingMainPage extends Component {
                     latitude: data.latitude,
                     longitude: data.longitude
                 });
+
+                Geolocation.reverseGeoCode(data.latitude,data.longitude).then(data =>{
+                    console.log('获取地址名称');
+                    console.log(data);
+
+                    this.setState({
+                        marker: {
+                            latitude: this.state.latitude,
+                            longitude: this.state.longitude,
+                            title: data.province+data.city+data.address+data.streetName+data.streetNumber
+                        },
+                        locationName:data.province+data.city+data.address+data.streetName+data.streetNumber
+                    });
+
+                })
+
             })
             .catch(e =>{
                 Alert.alert('获取GPS错误,请检查是否开启定位服务!')
@@ -144,11 +172,6 @@ class SingMainPage extends Component {
 
         Ionicons.getImageSource('ios-close-circle', 50,'#FF0000').then((source) => this.setState({ deleteIcon: source }));
 
-
-        //获取登录用户的签到状态然后来加载按钮文字
-        console.log(this.props.user);
-        //console.log('查询'+this.props.user.realname+'的签到状态');
-        this.props.actions.signState(this.props.user);//dispath 查询签到状态
     }
 
     componentDidMount() {
@@ -188,20 +211,20 @@ class SingMainPage extends Component {
                 console.log('111111');
                 this.setState({
                     buttonTitle: "上班\n打卡",
-                    signState:'-1'
+                    signState:-1
                 });
             }else  if(state.data.STATUS==="0"){
                 console.log('222222');
                 this.setState({
                     buttonTitle: "下班\n打卡",
-                    signState:'0',
+                    signState:0,
                     btnbackground:'#EA7A00'
                 });
             }else  if(state.data.STATUS==="1"){
                 console.log('333333');
                 this.setState({
                     buttonTitle: "全部\n完成",
-                    signState:'1',
+                    signState:1,
                     buttonisDisabled:true
                 });
             }
@@ -215,15 +238,13 @@ class SingMainPage extends Component {
     _Sign(){
 
 
-
-
         console.log(this.state);
 
         //1.直接满足条件 直接打卡
         //Alert.alert('你点击了');
         //判断是否超过时间 打卡上班要在8.30💰  前    打卡下班要5.30后
 
-        let REMARKS='';
+        let REMARKS='测试';
         let PHOTO_SIZE=0;
 
         if(this.state.avatarSource1!='undefined'){
@@ -240,18 +261,25 @@ class SingMainPage extends Component {
 
     //文本信息
 
+        let time=moment().format('YYYY-MM-DD hh:mm:ss');
+
         let infoParams={
-            'COMMIT_TIME':	'2016-12-14 08:42:49',
-            'ADDRESS':	'中国江苏省苏州市虎丘区新元街199号',
+            'COMMIT_TIME':	time,
+            'ADDRESS':	this.state.locationName,
             'REMARKS':	REMARKS,
             'USER_ID':	this.props.user.username,
             'SEQ':	infoUUID,
             'PHOTO_SIZE':	PHOTO_SIZE,
-            'TYPE':this.state.signState,
+            'TYPE':this.state.signState+1,
             'DEPT_ID':	this.props.user.deptId,
             'LONGITUDE':	this.state.longitude,
             'LATITUDE':	this.state.latitude
         }
+
+        this.setState({
+            infoCommitTime:time
+        });
+        //infoCommitTime
 
         //照片信息
 
@@ -261,33 +289,26 @@ class SingMainPage extends Component {
             PicParams={
 
                 "pics":{
-                    'COMMIT_TIME':'2016-12-15 08:28:40',
+                    'COMMIT_TIME':this.state.commitPic1time,
                     'CRRELATION_ID':	'1282fec7-4e77-4547-8a2b-c8e221b873da',//对应的信息ID
                     'SEQ':	JSUtil.uuid(),
                     'ZP':this.state.base64image1,
                     'XH':'1'
                 }
 
-//上面的是测试数据
-                // "pics":{
-                //     'COMMIT_TIME':moment().format('YYYY-MM-DD hh:mm:ss'),
-                //     'CRRELATION_ID':	infoUUID,//对应的信息ID
-                //     'SEQ':	JSUtil.uuid(),
-                //     'ZP':this.state.base64image1,
-                //     'XH':'0'
-                // }
+
             }
             if(this.state.avatarSource2){
                 PicParams={
                     "pics":[{
-                        'COMMIT_TIME':moment().format('YYYY-MM-DD hh:mm:ss'),
+                        'COMMIT_TIME':this.state.commitPic1time,
                         'CRRELATION_ID':	infoUUID,//对应的信息ID
                         'SEQ':	JSUtil.uuid(),
                         'ZP':this.state.base64image1,
                         'XH':'0'
                     },
                     {
-                        'COMMIT_TIME':moment().format('YYYY-MM-DD hh:mm:ss'),
+                        'COMMIT_TIME':this.state.commitPic2time,
                         'CRRELATION_ID':	infoUUID,//对应的信息ID
                         'SEQ':	JSUtil.uuid(),
                         'ZP':this.state.base64image2,
@@ -298,21 +319,21 @@ class SingMainPage extends Component {
                 if(this.state.avatarSource3){
                     PicParams={
                         "pics":[{
-                            'COMMIT_TIME':moment().format('YYYY-MM-DD hh:mm:ss'),
+                            'COMMIT_TIME':this.state.commitPic1time,
                             'CRRELATION_ID':	infoUUID,//对应的信息ID
                             'SEQ':	JSUtil.uuid(),
                             'ZP':this.state.base64image1,
                             'XH':'0'
                         },
                         {
-                            'COMMIT_TIME':moment().format('YYYY-MM-DD hh:mm:ss'),
+                            'COMMIT_TIME':this.state.commitPic2time,
                             'CRRELATION_ID':	infoUUID,//对应的信息ID
                             'SEQ':	JSUtil.uuid(),
                             'ZP':this.state.base64image2,
                             'XH':'1'
                         },
                         {
-                            'COMMIT_TIME':moment().format('YYYY-MM-DD hh:mm:ss'),
+                            'COMMIT_TIME':this.state.commitPic3time,
                             'CRRELATION_ID':	infoUUID,//对应的信息ID
                             'SEQ':	JSUtil.uuid(),
                             'ZP':this.state.base64image3,
@@ -337,7 +358,7 @@ class SingMainPage extends Component {
 
             console.log(infoParams);
 
-            //this.props.actions.Sign(PicParams,infoParams);//dispath 签到签出
+            this.props.actions.Sign(PicParams,infoParams);//dispath 签到签出
 
             //超过时间 需要填写原因
             //this.refs.modal3.open();
@@ -388,13 +409,27 @@ class SingMainPage extends Component {
                 console.log('添加水印')
 
                 //添加水印
+                //console.log(response.data);
+                var Utils = NativeModules.Utils;
 
 
-                this.setState({
-                    avatarSource1: source,
-                    justifyContentStyle:'space-around',
-                    base64image1:response.data
+                let time=moment().format('YYYY-MM-DD hh:mm:ss');
+
+
+                Utils.addWaterMark(response.data, this.props.user.username,this.state.locationName,this.state.longitude+','+this.state.latitude,time).then(response=>{
+                    console.log('添加水印返回===')
+                    console.log(response.data);
+
+                    this.setState({
+                        avatarSource1: source,
+                        justifyContentStyle:'space-around',
+                        base64image1:response.data,
+                        commitPic1time:time
+                    });
+
                 });
+
+
 
                 //console.log('获取到的图片base64');
 
@@ -443,11 +478,31 @@ class SingMainPage extends Component {
                     source = {uri: response.uri.replace('file://', ''), isStatic: true};
                 }
 
-                this.setState({
-                    avatarSource2: source,
-                    justifyContentStyle:'space-between',
-                    base64image2:response.data
+
+                console.log('添加水印')
+
+                //添加水印
+                var Utils = NativeModules.Utils;
+
+                let time=moment().format('YYYY-MM-DD hh:mm:ss');
+
+
+                Utils.addWaterMark(response.data, this.props.user.username,this.state.locationName,this.state.longitude+','+this.state.latitude,time).then(response=>{
+                    console.log('添加水印返回===')
+                    console.log(response.data);
+
+                    this.setState({
+                        avatarSource2: source,
+                        justifyContentStyle:'space-between',
+                        base64image2:response.data,
+                        commitPic2time:time
+                    });
+
                 });
+
+
+
+
             }
         });
     }
@@ -492,10 +547,33 @@ class SingMainPage extends Component {
                     source = {uri: response.uri.replace('file://', ''), isStatic: true};
                 }
 
-                this.setState({
-                    avatarSource3: source,
-                    base64image3:response.data
+
+                console.log('添加水印')
+
+                //添加水印
+
+                var Utils = NativeModules.Utils;
+
+                let time=moment().format('YYYY-MM-DD hh:mm:ss');
+
+
+                Utils.addWaterMark(response.data, this.props.user.username,this.state.locationName,this.state.longitude+','+this.state.latitude,time).then(response=>{
+                    console.log('添加水印返回===')
+                    console.log(response.data);
+
+                    this.setState({
+                        avatarSource3: source,
+                        base64image3:response.data,
+                        commitPic3time:time
+                    });
+
                 });
+
+
+
+
+
+
             }
         });
     }
@@ -585,14 +663,24 @@ class SingMainPage extends Component {
 
                     {this.state.doingMsg==='提交完毕'?(
                     <View style={styles.signDone}>
-                        <Image
-                            style={styles.signDonePic}
-                            source={require('../images/ic_checkin_green.png')}
-                        />
+                        {
+                            this.state.signState===1?(
+                                <Image
+                                    style={styles.signDonePic}
+                                    source={require('../images/ic_checkin_green.png')}
+                                />
+                            ):(
+                                <Image
+                                    style={styles.signDonePic}
+                                    source={require('../images/ic_checkin_green.png')}
+                                />
+                            )
+                        }
+
                         <View style={styles.signDoneText}>
-                            <Text style={{fontSize:20}}>第{this.state.rank}个上班打卡成功</Text>
-                            <Text style={{marginTop:10,fontSize:20}}>2016年12月15日16:19:59</Text>
-                            <Text style={{marginTop:10,fontSize:20,color:'#DEDEDE'}}>XXXXXXXXXXX</Text>
+                            <Text style={{fontSize:20}}>第{this.state.rank}个{this.state.signState===1?'上班':'下班'}上班打卡成功</Text>
+                            <Text style={{marginTop:10,fontSize:20}}>{this.state.infoCommitTime}</Text>
+                            <Text style={{marginTop:10,fontSize:20,color:'#DEDEDE'}}>{this.state.locationName}</Text>
                         </View>
 
                     </View>

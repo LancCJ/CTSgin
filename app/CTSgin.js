@@ -82,6 +82,7 @@ const scenes = Actions.create(
                 titleStyle={styles.titleStyle}
             />
             <Scene
+
                 key="SingMainPage"
                 component={SingMainPage}
                 renderBackButton={_renderExitButton}

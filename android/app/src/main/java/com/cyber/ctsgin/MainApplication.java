@@ -4,6 +4,7 @@ import android.app.Application;
 import android.util.Log;
 import com.facebook.react.ReactApplication;
 import com.imagepicker.ImagePickerPackage;
+import com.lanccj.reactutil.WterMarkReactPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
@@ -30,6 +31,7 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new ImagePickerPackage(),
             new VectorIconsPackage(),
+            new WterMarkReactPackage(),
             new BaiduMapPackage(getApplicationContext())
       );
     }

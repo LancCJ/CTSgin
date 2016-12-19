@@ -52,6 +52,29 @@ console.log(user);
             'model': DeviceInfo.getDeviceName()
         };
 
+let result={
+    "ret": 0,
+    "msg": "",
+    "user": {
+        "name": "yanlm",
+        "allPrivileges": null,
+        "id": 14154,
+        "description": null,
+        "username": "yanlm",
+        "deptName": "产品二部",
+        "realname": "严利明",
+        "imei": null,
+        "realDeptId": 1267,
+        "phone": null,
+        "deptId": "88880005",
+        "create_time": null,
+        "fid": null
+    },
+    "token": "785D69F90D53AB7F750E3114FA31C1F7"
+};
+        //dispatch({type:ActionTypes.LOGIN,user:result.user});
+
+
         NetUtil.ptos(Constant.UserLoginUrl,params,function (result) {
             //下面是请求下来的数据
             // let testJson=require('./login.json');
