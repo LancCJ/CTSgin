@@ -118,15 +118,15 @@ class SingMainPage extends Component {
 
 
         //获取登录用户的签到状态然后来加载按钮文字
-        console.log(this.props.user);
-        //console.log('查询'+this.props.user.realname+'的签到状态');
+        //console.log(this.props.user);
+        ////console.log('查询'+this.props.user.realname+'的签到状态');
         this.props.actions.signState(this.props.user);//dispath 查询签到状态
 
-        // console.log(this.props.user);
+        // //console.log(this.props.user);
         //获取手机当前坐标
         Geolocation.getCurrentPosition()
             .then(data => {
-                console.log(data);
+                //console.log(data);
 
                 this.setState({
                     zoom: 20,
@@ -144,8 +144,8 @@ class SingMainPage extends Component {
                 });
 
                 Geolocation.reverseGeoCode(data.latitude,data.longitude).then(data =>{
-                    console.log('获取地址名称');
-                    console.log(data);
+                    //console.log('获取地址名称');
+                    //console.log(data);
 
                     this.setState({
                         marker: {
@@ -163,7 +163,7 @@ class SingMainPage extends Component {
                 Alert.alert('获取GPS错误,请检查是否开启定位服务!')
             });
 
-        console.log('获取名称');
+        //console.log('获取名称');
 
 
 
@@ -175,7 +175,7 @@ class SingMainPage extends Component {
     }
 
     componentDidMount() {
-        console.log('获取名称');
+        //console.log('获取名称');
 
 
 
@@ -203,25 +203,25 @@ class SingMainPage extends Component {
         }
 
         if(state!=null){
-           console.log('我在界面 获取最新的state');
-           console.log(state.data.STATUS);
+           //console.log('我在界面 获取最新的state');
+           //console.log(state.data.STATUS);
 
            //按照状态来显示 按钮的文字
             if(state.data.STATUS==="-1"){
-                console.log('111111');
+                //console.log('111111');
                 this.setState({
                     buttonTitle: "上班\n打卡",
                     signState:-1
                 });
             }else  if(state.data.STATUS==="0"){
-                console.log('222222');
+                //console.log('222222');
                 this.setState({
                     buttonTitle: "下班\n打卡",
                     signState:0,
                     btnbackground:'#EA7A00'
                 });
             }else  if(state.data.STATUS==="1"){
-                console.log('333333');
+                //console.log('333333');
                 this.setState({
                     buttonTitle: "全部\n完成",
                     signState:1,
@@ -229,7 +229,7 @@ class SingMainPage extends Component {
                 });
             }
 
-            console.log(this.state);
+            //console.log(this.state);
 
         }
         return true;
@@ -238,7 +238,7 @@ class SingMainPage extends Component {
     _Sign(){
 
 
-        console.log(this.state);
+        //console.log(this.state);
 
         //1.直接满足条件 直接打卡
         //Alert.alert('你点击了');
@@ -290,7 +290,7 @@ class SingMainPage extends Component {
 
                 "pics":{
                     'COMMIT_TIME':this.state.commitPic1time,
-                    'CRRELATION_ID':	'1282fec7-4e77-4547-8a2b-c8e221b873da',//对应的信息ID
+                    'CRRELATION_ID':	infoUUID,//对应的信息ID
                     'SEQ':	JSUtil.uuid(),
                     'ZP':this.state.base64image1,
                     'XH':'1'
@@ -353,10 +353,10 @@ class SingMainPage extends Component {
 
             this.setState({openModal:true});
 
-            console.log('打卡前参数准备如下....');
-            console.log(PicParams);
+            //console.log('打卡前参数准备如下....');
+            //console.log(PicParams);
 
-            console.log(infoParams);
+            //console.log(infoParams);
 
             this.props.actions.Sign(PicParams,infoParams);//dispath 签到签出
 
@@ -382,16 +382,16 @@ class SingMainPage extends Component {
         };
 
         ImagePicker.showImagePicker(options, (response) => {
-            console.log('Response = ', response);
+            //console.log('Response = ', response);
 
             if (response.didCancel) {
-                console.log('User cancelled photo picker');
+                //console.log('User cancelled photo picker');
             }
             else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
+                //console.log('ImagePicker Error: ', response.error);
             }
             else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton);
+                //console.log('User tapped custom button: ', response.customButton);
             }
             else {
                 var source;
@@ -406,10 +406,10 @@ class SingMainPage extends Component {
                     source = {uri: response.uri.replace('file://', ''), isStatic: true};
                 }
 
-                console.log('添加水印')
+                //console.log('添加水印')
 
                 //添加水印
-                //console.log(response.data);
+                ////console.log(response.data);
                 var Utils = NativeModules.Utils;
 
 
@@ -417,8 +417,8 @@ class SingMainPage extends Component {
 
 
                 Utils.addWaterMark(response.data, this.props.user.username,this.state.locationName,this.state.longitude+','+this.state.latitude,time).then(response=>{
-                    console.log('添加水印返回===')
-                    console.log(response.data);
+                    //console.log('添加水印返回===')
+                    //console.log(response.data);
 
                     this.setState({
                         avatarSource1: source,
@@ -431,9 +431,9 @@ class SingMainPage extends Component {
 
 
 
-                //console.log('获取到的图片base64');
+                ////console.log('获取到的图片base64');
 
-                //console.log(source.data);
+                ////console.log(source.data);
             }
         });
     }
@@ -454,16 +454,16 @@ class SingMainPage extends Component {
         };
 
         ImagePicker.showImagePicker(options, (response) => {
-            console.log('Response = ', response);
+            //console.log('Response = ', response);
 
             if (response.didCancel) {
-                console.log('User cancelled photo picker');
+                //console.log('User cancelled photo picker');
             }
             else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
+                //console.log('ImagePicker Error: ', response.error);
             }
             else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton);
+                //console.log('User tapped custom button: ', response.customButton);
             }
             else {
                 var source;
@@ -479,7 +479,7 @@ class SingMainPage extends Component {
                 }
 
 
-                console.log('添加水印')
+                //console.log('添加水印')
 
                 //添加水印
                 var Utils = NativeModules.Utils;
@@ -488,8 +488,8 @@ class SingMainPage extends Component {
 
 
                 Utils.addWaterMark(response.data, this.props.user.username,this.state.locationName,this.state.longitude+','+this.state.latitude,time).then(response=>{
-                    console.log('添加水印返回===')
-                    console.log(response.data);
+                    //console.log('添加水印返回===')
+                    //console.log(response.data);
 
                     this.setState({
                         avatarSource2: source,
@@ -523,16 +523,16 @@ class SingMainPage extends Component {
         };
 
         ImagePicker.showImagePicker(options, (response) => {
-            console.log('Response = ', response);
+            //console.log('Response = ', response);
 
             if (response.didCancel) {
-                console.log('User cancelled photo picker');
+                //console.log('User cancelled photo picker');
             }
             else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
+                //console.log('ImagePicker Error: ', response.error);
             }
             else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton);
+                //console.log('User tapped custom button: ', response.customButton);
             }
             else {
                 var source;
@@ -548,7 +548,7 @@ class SingMainPage extends Component {
                 }
 
 
-                console.log('添加水印')
+                //console.log('添加水印')
 
                 //添加水印
 
@@ -558,8 +558,8 @@ class SingMainPage extends Component {
 
 
                 Utils.addWaterMark(response.data, this.props.user.username,this.state.locationName,this.state.longitude+','+this.state.latitude,time).then(response=>{
-                    console.log('添加水印返回===')
-                    console.log(response.data);
+                    //console.log('添加水印返回===')
+                    //console.log(response.data);
 
                     this.setState({
                         avatarSource3: source,

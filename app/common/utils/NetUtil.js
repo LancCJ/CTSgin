@@ -39,7 +39,7 @@ export default class NetUtil extends Component {
                 url += '&' + paramsArray.join('&')
             }
         }
-       // console.log(url);
+       // //console.log(url);
 
         //fetch请求
         fetch(url,{
@@ -62,8 +62,8 @@ export default class NetUtil extends Component {
                 url += '&' + paramsArray.join('&')
             }
         }
-        console.log('url请求');
-        console.log(url);
+        //console.log('url请求');
+        //console.log(url);
 
         //fetch请求
         fetch(url,{
@@ -75,6 +75,28 @@ export default class NetUtil extends Component {
                 callback(responseJSON)
             }) .done();
     }
+
+
+    static postForm(url,params,callback){
+
+        console.log(params);
+
+        //console.log('url请求');
+        console.log(url);
+
+        //fetch请求
+        fetch(url,{
+            method: 'POST',
+            body :JSON.stringify(params)
+        })
+            .then((response) =>
+                response.json())
+            .then((responseJSON) => {
+                callback(responseJSON)
+            }) .done();
+    }
+
+
 
 
 
@@ -89,8 +111,8 @@ export default class NetUtil extends Component {
                 url += '&' + paramsArray.join('&')
             }
         }
-        console.log('url请求');
-        console.log(url);
+        //console.log('url请求');
+       // console.log(url);
 
         //fetch请求
         fetch(url,{
@@ -131,7 +153,7 @@ export default class NetUtil extends Component {
      *  callback:回调函数
      * */
     static post(url,params,callback){
-            //console.log('请求参数:'+JSON.stringify(NetUtil.strMapToObj(params)));
+            ////console.log('请求参数:'+JSON.stringify(NetUtil.strMapToObj(params)));
             //fetch请求
             fetch(url,{
                 method : 'POST',
@@ -141,6 +163,21 @@ export default class NetUtil extends Component {
                 .then((responseJSON) => {
                     callback(responseJSON)
                 }) .done();
+
+    }
+
+
+    static post2(url,params,callback){
+        ////console.log('请求参数:'+JSON.stringify(NetUtil.strMapToObj(params)));
+        //fetch请求
+        fetch(url,{
+            method : 'POST',
+            body:JSON.stringify(params)
+        })
+            .then((response) => response.json())
+            .then((responseJSON) => {
+                callback(responseJSON)
+            }) .done();
 
     }
 

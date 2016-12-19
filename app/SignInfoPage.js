@@ -55,8 +55,8 @@ export default class SignInfoPage extends Component {
 
         //查询数据
         NetUtil.ptos(Constant.SignHistoryInfoUrl,params,function (result) {
-            console.log('签到历史');
-            console.log(result);
+            //console.log('签到历史');
+            //console.log(result);
 
             this.setState({
                 list:result.data

@@ -15,27 +15,27 @@ const initialState={
 export default function login(state=initialState,action={}){
     switch(action.type) {
         case ActionTypes.LOGIN:
-            console.log('reducer-用户已经登录');
+            //console.log('reducer-用户已经登录');
             return Object.assign({}, state, {
                 isLoggedIn:true,
                 user:action.user,
                 status: 'done'
             });
         case ActionTypes.LOGIN_ING:
-            console.log('reducer-用户登录中');
+            //console.log('reducer-用户登录中');
             return Object.assign({}, state, {
                 isLoggedIn:false,
                 status: 'doing'
             });
         case ActionTypes.LOGIN_ERROR:
-            console.log('types.LOGIN_ERROR...');
+            //console.log('types.LOGIN_ERROR...');
             return {
                 ...state,
                 isLoggedIn:false,
                 status: 'doing',
             }
         case ActionTypes.LOGIN_NO_USER:
-            console.log('用户不存在');
+            //console.log('用户不存在');
             return {
                 ...state,
                 isLoggedIn:false,
@@ -43,7 +43,7 @@ export default function login(state=initialState,action={}){
                 msg:action.msg
             }
         case ActionTypes.LOGIN_ERROR_PASSWORD:
-            console.log('账户密码不正确');
+            //console.log('账户密码不正确');
             return {
                 ...state,
                 isLoggedIn:false,

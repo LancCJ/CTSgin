@@ -56,7 +56,7 @@ class AppLoginPage extends Component {
         const {isLoggedIn,user,status,msg}=nextProps;
 
         if(isLoggedIn){
-            //console.log('登录成功进行跳转')
+            ////console.log('登录成功进行跳转')
             this.setState({userName:'',userPwd:''});
 
             // 使用key来保存数据。这些数据一般是全局独有的，常常需要调用的。
