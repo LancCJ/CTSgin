@@ -30,7 +30,6 @@ import JSUtil from './common/utils/JSUtil';
 
 import moment from './common/utils/moment';
 
-import watermark from 'react-native-watermark'
 
 var Spinner = require('react-native-spinkit');
 import { Icon,SocialIcon } from 'react-native-elements'
@@ -41,8 +40,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 var Platform = require('react-native').Platform;
 var ImagePicker = require('react-native-image-picker');
 import {Actions} from 'react-native-router-flux';
-
-import Modal from 'react-native-simple-modal';
+import Modal from 'react-native-root-modal';
 
 
 // More info on all the options is below in the README...just some common use cases shown here
@@ -679,61 +677,59 @@ class SingMainPage extends Component {
                     <Text style={[{color:'#FFFFFF',textAlign:'center',fontSize:Dimensions.get('window').height/70}]}>登录用户:{this.props.user.realname}</Text>
                 </View>
 
+
                 <Modal
-                    offset={this.state.offsetModal}
-                    open={this.state.openModal}
-                    overlayBackground={'rgba(0, 0, 0, 0.75)'}
-                    animationDuration={200}
-                    animationTension={40}
-                    modalDidOpen={() => this.setState({openModal:true})}
-                    modalDidClose={() => this.setState({openModal:false})}
-                    closeOnTouchOutside={true}
-                    containerStyle={{
-                       justifyContent: 'center',
-                       alignItems:'center'
-                    }}
-                                    modalStyle={{
-                       borderRadius: 2,
-                       margin: 20,
-                       padding: 10,
-                       backgroundColor: 'rgba(0, 0, 0, 0)'
-                    }}>
+                    style={{
+                            top: 0,
+                            right: 0,
+                            bottom: 0,
+                            left: 0,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                        }}
+
+                                        visible={this.state.openModal}
+                                    >
 
                     {this.state.doingMsg==='提交完毕'?(
-                    <View style={styles.signDone}>
-                        {
-                            this.state.signState===1?(
-                                <Image
-                                    style={styles.signDonePic}
-                                    source={require('../images/ic_checkin_green.png')}
-                                />
-                            ):(
-                                <Image
-                                    style={styles.signDonePic}
-                                    source={require('../images/ic_checkin_green.png')}
-                                />
-                            )
-                        }
+                        <View style={styles.signDone}>
+                            {
+                                this.state.signState===1?(
+                                    <Image
+                                        style={styles.signDonePic}
+                                        source={require('../images/ic_checkin_green.png')}
+                                    />
+                                ):(
+                                    <Image
+                                        style={styles.signDonePic}
+                                        source={require('../images/ic_checkin_green.png')}
+                                    />
+                                )
+                            }
 
-                        <View style={styles.signDoneText}>
-                            <Text style={{fontSize:20}}>第{this.state.rank}个{this.state.signState===1?'上班':'下班'}上班打卡成功</Text>
-                            <Text style={{marginTop:10,fontSize:20}}>{this.state.infoCommitTime}</Text>
-                            <Text style={{marginTop:10,fontSize:20,color:'#DEDEDE'}}>{this.state.locationName}</Text>
+                            <View style={styles.signDoneText}>
+                                <Text style={{fontSize:20}}>第{this.state.rank}个{this.state.signState===1?'上班':'下班'}上班打卡成功</Text>
+                                <Text style={{marginTop:10,fontSize:20}}>{this.state.infoCommitTime}</Text>
+                                <Text style={{marginTop:10,fontSize:20,color:'#DEDEDE'}}>{this.state.locationName}</Text>
+                            </View>
+
                         </View>
-
-                    </View>
                     ):(<View>
                         <Spinner style={styles.spinner} isVisible={this.state.openModal} size={this.state.spinnersize} type='Bounce' color={this.state.spinnercolor}/>
                         <Text style={styles.doingMsg}>{this.state.doingMsg}</Text>
                     </View>)}
 
-
                 </Modal>
+
+
 
             </View>
         );
     }
 }
+
+
 
 const styles = StyleSheet.create({
     container: {

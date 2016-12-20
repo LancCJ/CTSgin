@@ -16,7 +16,7 @@ import {
 //第三方
 import { FormLabel, FormInput ,Button,SocialIcon} from 'react-native-elements'
 import {Actions} from 'react-native-router-flux'
-var Modal = require('react-native-modalbox');
+import Modal from 'react-native-root-modal';
 import {connect} from 'react-redux';//将我们的页面和action链接起来
 import {bindActionCreators} from 'redux';//将要绑定的actions和dispatch绑定到一起
 import * as actionCreators from './redux/actions/LoginAction';//导入需要绑定的actions
@@ -51,7 +51,6 @@ class AppLoginPage extends Component {
         if(!this.state.userName||!this.state.userPwd){
             Alert.alert('用户名或密码不能为空！');
         }else{
-            this.refs.modal.open();//loading 状态
             this.props.actions.login({'userName':this.state.userName,'userPwd':this.state.userPwd});//dispath 登陆
         }
     }
@@ -81,7 +80,6 @@ class AppLoginPage extends Component {
         }else if(status==='error'){
             Alert.alert(msg);
         }
-        this.refs.modal.close();//loading 状态
         return true;
     }
 
@@ -119,9 +117,25 @@ class AppLoginPage extends Component {
                     {/*/>*/}
                 </View>
 
-                <Modal animationduration={0} isopen={this.props.status=='doing'?true:false} position="center" ref='modal' style={styles.modal}>
+
+                <Modal
+                    style={{
+                            top: 0,
+                            right: 0,
+                            bottom: 0,
+                            left: 0,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                        }}
+
+                    visible={this.props.status=='doing'?true:false}
+                >
+
                     <Text>正在登陆</Text>
+
                 </Modal>
+
             </View>
         );
     }

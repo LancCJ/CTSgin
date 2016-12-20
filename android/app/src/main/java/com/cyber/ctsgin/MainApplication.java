@@ -3,6 +3,7 @@ package com.cyber.ctsgin;
 import android.app.Application;
 import android.util.Log;
 import com.facebook.react.ReactApplication;
+import com.cboy.rn.splashscreen.SplashScreenReactPackage;
 import com.rnfs.RNFSPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.lanccj.reactutil.WterMarkReactPackage;
@@ -30,6 +31,7 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
       new RNDeviceInfo(),
           new MainReactPackage(),
+            new SplashScreenReactPackage(),
             new RNFSPackage(),
             new ImagePickerPackage(),
             new VectorIconsPackage(),

@@ -10,7 +10,5 @@ import {
 } from 'react-native';
 
 import Root from './app/Root'
-import SplashScreen from "rn-splash-screen";
-// Hide the active splash screen
-SplashScreen.hide();
+
 AppRegistry.registerComponent('CTSgin', () => Root);

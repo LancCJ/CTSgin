@@ -11,22 +11,21 @@
 #import "RCTBundleURLProvider.h"
 #import "RCTRootView.h"
 #import "RCTBaiduMapViewManager.h"
-//#import "RCTSplashScreen.h"
+#import "SplashScreen.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   NSURL *jsCodeLocation;
-jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"index.ios" withExtension:@"jsbundle"];
-  //jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
+//jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"index.ios" withExtension:@"jsbundle"];
+  jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"CTSgin"
                                                initialProperties:nil
                                                    launchOptions:launchOptions];
-  // Show splash screen (rn-splash-screen)
-  //[RCTSplashScreen show:rootView];
+
   
   rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
 
@@ -37,6 +36,7 @@ jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"index.ios" withExtensio
   [self.window makeKeyAndVisible];
   
   [RCTBaiduMapViewManager initSDK:@"o7vjn4T0HZzFMHhNXm5m1Gdftoy0SDuK"];
+  [SplashScreen show];
   return YES;
 }
 
