@@ -83,7 +83,7 @@ waterMark4:(NSString *)waterMark4
   
  
   
-  UIFont* theFont = [UIFont systemFontOfSize:15];
+  UIFont* theFont = [UIFont fontWithName:@"Helvetica-Bold" size:16];
   
   NSString* mark1 = waterMark1;
   CGSize mark1Width = [mark1 sizeWithFont:theFont

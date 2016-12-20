@@ -21,6 +21,12 @@ import {connect} from 'react-redux';//将我们的页面和action链接起来
 import {bindActionCreators} from 'redux';//将要绑定的actions和dispatch绑定到一起
 import * as actionCreators from './redux/actions/LoginAction';//导入需要绑定的actions
 
+import Dimensions from 'Dimensions';
+
+var ScreenWidth = Dimensions.get('window').width;
+var ScreenHeight = Dimensions.get('window').height;
+var ScreenScale = Dimensions.get('window').scale;
+
 class AppLoginPage extends Component {
     constructor(props) {
         super(props);
@@ -122,7 +128,6 @@ class AppLoginPage extends Component {
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        marginTop:55,
         backgroundColor:"#FFFFFF",
         justifyContent:"center",
         alignItems:"center"
@@ -134,8 +139,8 @@ const styles = StyleSheet.create({
     },
     loginform:{
         flex:1,
-        height:300,
-        width:400,
+        height:ScreenHeight/3,
+        width:ScreenWidth-1,
         marginTop:200
     },
     copyRight:{

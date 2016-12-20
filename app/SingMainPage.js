@@ -259,9 +259,23 @@ class SingMainPage extends Component {
 
         let infoUUID=JSUtil.uuid();
 
+//        let infoUUID='25cc84c6-a5af-4ca3-aad1-d73cb9ed642a'
+
     //文本信息
 
         let time=moment().format('YYYY-MM-DD hh:mm:ss');
+
+        // let infoParams = new FormData();
+        // infoParams.append('COMMIT_TIME', time);
+        // infoParams.append( 'ADDRESS',	this.state.locationName);
+        // infoParams.append('REMARKS',	REMARKS);
+        // infoParams.append( 'USER_ID',	this.props.user.username);
+        // infoParams.append('SEQ',	infoUUID);
+        // infoParams.append( 'PHOTO_SIZE',	PHOTO_SIZE);
+        // infoParams.append( 'TYPE',this.state.signState+1);
+        // infoParams.append( 'DEPT_ID',	this.props.user.deptId);
+        // infoParams.append( 'LONGITUDE',	this.state.longitude);
+        // infoParams.append( 'LATITUDE',	this.state.latitude);
 
         let infoParams={
             'COMMIT_TIME':	time,
@@ -293,7 +307,7 @@ class SingMainPage extends Component {
                     'CRRELATION_ID':	infoUUID,//对应的信息ID
                     'SEQ':	JSUtil.uuid(),
                     'ZP':this.state.base64image1,
-                    'XH':'1'
+                    'XH':'0'
                 }
 
 
@@ -416,9 +430,11 @@ class SingMainPage extends Component {
                 let time=moment().format('YYYY-MM-DD hh:mm:ss');
 
 
-                Utils.addWaterMark(response.data, this.props.user.username,this.state.locationName,this.state.longitude+','+this.state.latitude,time).then(response=>{
+                Utils.addWaterMark(response.data, this.props.user.realname,this.state.locationName,this.state.longitude+','+this.state.latitude,time).then(response=>{
                     //console.log('添加水印返回===')
                     //console.log(response.data);
+
+                    //console.log(source)
 
                     this.setState({
                         avatarSource1: source,

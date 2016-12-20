@@ -16,6 +16,9 @@
 		0C113AC71E038C95003F28CE /* libRNWatermark.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C113AC61E038C85003F28CE /* libRNWatermark.a */; };
 		0C4E40B71E01266500AABD31 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C4E40B41E01265400AABD31 /* libRNDeviceInfo.a */; };
 		0C8F1EAB1E02309300D65770 /* libRNSpinkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C8F1EA91E02304500D65770 /* libRNSpinkit.a */; };
+		0C98B04D1E08DCD7003B7112 /* Icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C98B04A1E08DCD7003B7112 /* Icon-29.png */; };
+		0C98B04E1E08DCD7003B7112 /* Icon-60.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C98B04B1E08DCD7003B7112 /* Icon-60.png */; };
+		0C98B04F1E08DCD7003B7112 /* Icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C98B04C1E08DCD7003B7112 /* Icon-40.png */; };
 		0CBF77DE1DFFE0B900CC1EE2 /* libRCTBaiduMap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CBF77CD1DFFE0A400CC1EE2 /* libRCTBaiduMap.a */; };
 		0CBF78001DFFE66400CC1EE2 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CBF77FF1DFFE66400CC1EE2 /* CoreLocation.framework */; };
 		0CBF78021DFFE66C00CC1EE2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CBF78011DFFE66C00CC1EE2 /* QuartzCore.framework */; };
@@ -265,6 +268,9 @@
 		0C113AA81E038C85003F28CE /* RNWatermark.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNWatermark.xcodeproj; path = "../node_modules/react-native-watermark/RNWatermark.xcodeproj"; sourceTree = "<group>"; };
 		0C4E409A1E01265400AABD31 /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
 		0C8F1E8D1E02304500D65770 /* RNSpinkit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSpinkit.xcodeproj; path = "../node_modules/react-native-spinkit/ios/RNSpinkit.xcodeproj"; sourceTree = "<group>"; };
+		0C98B04A1E08DCD7003B7112 /* Icon-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-29.png"; path = "../../../../../Desktop/Icon-29.png"; sourceTree = "<group>"; };
+		0C98B04B1E08DCD7003B7112 /* Icon-60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-60.png"; path = "../../../../../Desktop/Icon-60.png"; sourceTree = "<group>"; };
+		0C98B04C1E08DCD7003B7112 /* Icon-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-40.png"; path = "../../../../../Desktop/Icon-40.png"; sourceTree = "<group>"; };
 		0CBF77C51DFFE0A400CC1EE2 /* RCTBaiduMap.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBaiduMap.xcodeproj; path = "../node_modules/react-native-baidu-map/ios/RCTBaiduMap.xcodeproj"; sourceTree = "<group>"; };
 		0CBF77FF1DFFE66400CC1EE2 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		0CBF78011DFFE66C00CC1EE2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -509,6 +515,9 @@
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
+				0C98B04A1E08DCD7003B7112 /* Icon-29.png */,
+				0C98B04B1E08DCD7003B7112 /* Icon-60.png */,
+				0C98B04C1E08DCD7003B7112 /* Icon-40.png */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
@@ -684,6 +693,9 @@
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
+					};
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = CHU4Z84BD3;
 					};
 				};
 			};
@@ -981,6 +993,7 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				9299915B3C1C49CBA7507B73 /* Entypo.ttf in Resources */,
+				0C98B04D1E08DCD7003B7112 /* Icon-29.png in Resources */,
 				9EAD93DC4A694C17B72BDBC9 /* EvilIcons.ttf in Resources */,
 				505FD0F90C8046A7BD41D120 /* FontAwesome.ttf in Resources */,
 				956C02EF3D2B485EB0B27446 /* Foundation.ttf in Resources */,
@@ -988,7 +1001,9 @@
 				BE517125D60844C1AAE3B4C2 /* MaterialIcons.ttf in Resources */,
 				F9E5CEE05F6B46D18B7B9EF3 /* Octicons.ttf in Resources */,
 				54D39C7DCC6D42C0836ABF70 /* SimpleLineIcons.ttf in Resources */,
+				0C98B04E1E08DCD7003B7112 /* Icon-60.png in Resources */,
 				E12D441710D14F8F8AB6E2B9 /* Zocial.ttf in Resources */,
+				0C98B04F1E08DCD7003B7112 /* Icon-40.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1098,6 +1113,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../node_modules/react-native-baidu-map/ios/lib";
@@ -1122,6 +1140,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cyber.CTSgin;
 				PRODUCT_NAME = CTSgin;
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1130,6 +1150,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../node_modules/react-native-baidu-map/ios/lib";
 				HEADER_SEARCH_PATHS = (
@@ -1153,6 +1176,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cyber.CTSgin;
 				PRODUCT_NAME = CTSgin;
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

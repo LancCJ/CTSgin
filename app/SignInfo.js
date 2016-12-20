@@ -35,7 +35,7 @@ export default class SignInfo extends Component {
                 <View style={{flexDirection:'row-reverse', width:Dimensions.get('window').width-40,borderWidth:0}}>
                     <Image
                         style={styles.donepic}
-                        source={(this.props.signState==='1')?require('../images/ic_checkin_tag.png'):require('../images/ic_checkout_tag.png')}
+                        source={(this.props.signState==='0')?require('../images/ic_checkin_tag.png'):require('../images/ic_checkout_tag.png')}
                     />
                 </View>
                 <View style={{flex:1}}>

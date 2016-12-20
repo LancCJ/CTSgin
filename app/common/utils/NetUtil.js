@@ -62,8 +62,8 @@ export default class NetUtil extends Component {
                 url += '&' + paramsArray.join('&')
             }
         }
-        //console.log('url请求');
-        //console.log(url);
+        console.log('url请求');
+        console.log(url);
 
         //fetch请求
         fetch(url,{
@@ -78,16 +78,26 @@ export default class NetUtil extends Component {
 
 
     static postForm(url,params,callback){
-
-        console.log(params);
-
-        //console.log('url请求');
-        console.log(url);
-
+        var formData="";
+        if (params) {
+            let paramsArray = [];
+            //拼接参数
+            Object.keys(params).forEach(key => paramsArray.push(key + '=' + params[key]))
+            if (formData.search(/\?/) === -1) {
+                formData +=paramsArray.join('&')
+            } else {
+                formData += '&' + paramsArray.join('&')
+            }
+        }
+console.log("formData");
+        console.log(formData);
         //fetch请求
         fetch(url,{
             method: 'POST',
-            body :JSON.stringify(params)
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body :formData
         })
             .then((response) =>
                 response.json())
