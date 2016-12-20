@@ -3,6 +3,7 @@ package com.cyber.ctsgin;
 import android.app.Application;
 import android.util.Log;
 import com.facebook.react.ReactApplication;
+import com.rnfs.RNFSPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.lanccj.reactutil.WterMarkReactPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -29,6 +30,7 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
       new RNDeviceInfo(),
           new MainReactPackage(),
+            new RNFSPackage(),
             new ImagePickerPackage(),
             new VectorIconsPackage(),
             new WterMarkReactPackage(),

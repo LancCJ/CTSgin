@@ -18,18 +18,20 @@ import AppLoginPage    from './AppLoginPage';
 import SingMainPage    from './SingMainPage';
 import SignInfoPage    from './SignInfoPage';
 import ReasonPage    from './ReasonPage';
+import Dimensions from 'Dimensions';
 
 const styles = StyleSheet.create({
     navigationBarStyle:{
         backgroundColor:"#0584FE"
     },
     titleStyle:{
-        color:"#FFFFFF"
+        color:"#FFFFFF",
+        fontSize:Dimensions.get('window').height/40
     },
     backTextStyle:{
         marginLeft:5,
         color:"#FFFFFF",
-        lineHeight:22
+        fontSize:Dimensions.get('window').height/65
     }
 });
 
@@ -38,7 +40,7 @@ const _renderExitButton=()=>{
     return (
         <TouchableOpacity onPress={Actions.pop}>
             <View style={[{flexDirection:"row"}]}>
-                <Ionicons name="ios-arrow-back" size={25} color="#FFFFFF" />
+                <Ionicons name="ios-arrow-back" size={21}  color="#FFFFFF" />
                 <Text style={styles.backTextStyle}>登出</Text>
             </View>
         </TouchableOpacity>
@@ -49,7 +51,7 @@ const _renderBackButton=()=>{
     return (
         <TouchableOpacity onPress={Actions.pop}>
             <View style={[{flexDirection:"row"}]}>
-                <Ionicons name="ios-arrow-back" size={25} color="#FFFFFF" />
+                <Ionicons name="ios-arrow-back" size={21} color="#FFFFFF" />
                 <Text style={styles.backTextStyle}>返回</Text>
             </View>
         </TouchableOpacity>
@@ -82,7 +84,6 @@ const scenes = Actions.create(
                 titleStyle={styles.titleStyle}
             />
             <Scene
-
                 key="SingMainPage"
                 component={SingMainPage}
                 renderBackButton={_renderExitButton}
@@ -98,6 +99,8 @@ const scenes = Actions.create(
                 title="考勤记录"
                 navigationBarStyle={styles.navigationBarStyle}
                 titleStyle={styles.titleStyle}
+                duration={1}
+
             />
             <Scene
                 key="ReasonPage"

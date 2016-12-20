@@ -119,7 +119,9 @@ class AppLoginPage extends Component {
                     {/*/>*/}
                 </View>
 
-                <Modal animationduration={0} isopen={this.props.status=='doing'?true:false} position="center" ref='modal' style={styles.modal}/>
+                <Modal animationduration={0} isopen={this.props.status=='doing'?true:false} position="center" ref='modal' style={styles.modal}>
+                    <Text>正在登陆</Text>
+                </Modal>
             </View>
         );
     }

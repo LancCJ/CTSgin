@@ -210,20 +210,20 @@ class SingMainPage extends Component {
             if(state.data.STATUS==="-1"){
                 //console.log('111111');
                 this.setState({
-                    buttonTitle: "上班\n打卡",
+                    buttonTitle: "上班打卡",
                     signState:-1
                 });
             }else  if(state.data.STATUS==="0"){
                 //console.log('222222');
                 this.setState({
-                    buttonTitle: "下班\n打卡",
+                    buttonTitle: "下班打卡",
                     signState:0,
                     btnbackground:'#EA7A00'
                 });
             }else  if(state.data.STATUS==="1"){
                 //console.log('333333');
                 this.setState({
-                    buttonTitle: "全部\n完成",
+                    buttonTitle: "全部完成",
                     signState:1,
                     buttonisDisabled:true
                 });
@@ -612,7 +612,7 @@ class SingMainPage extends Component {
 
                 <View style={[styles.center,{borderWidth:0}]}>
                     <View style={{borderBottomWidth:1,borderBottomColor:'#DEDEDE',height:25}}>
-                        <Text style={{marginLeft:50,fontSize:20}}>现场照片</Text>
+                        <Text style={{marginLeft:50,fontSize:Dimensions.get('window').height/70}}>现场照片</Text>
                     </View>
 
                     <View style={{padding:15,flex:1,borderBottomWidth:1,borderBottomColor:'#DEDEDE',flexDirection:'row',marginTop:5,justifyContent:this.state.justifyContentStyle,alignItems:'center'}}>
@@ -644,17 +644,39 @@ class SingMainPage extends Component {
                 </View>
 
                 <View style={styles.button}>
-                    <TouchableOpacity onPress={this._Sign.bind(this)} >
-                        <View style={{ justifyContent:"center",alignItems:"center",width:Dimensions.get('window').height /3-100,height:Dimensions.get('window').height /3-100,borderRadius:(Dimensions.get('window').height /3-100)/2,backgroundColor:this.state.btnbackground,borderWidth:10,borderColor:'#DEDEDE'}} textStyle={{fontSize: 18,color:'white'}}>
-                            <Text style={[{color:'#FFFFFF',fontSize:23}]}>{this.state.signState?this.state.buttonTitle:this.state.buttonTitle}</Text>
-                        </View>
-                    </TouchableOpacity>
 
+                        {this.state.buttonTitle==='上班打卡'?(
+                        <TouchableOpacity onPress={this._Sign.bind(this)} >
+                            <Image
+                                style={{ justifyContent:"center",alignItems:"center",width:Dimensions.get('window').height /3-60,height:Dimensions.get('window').height /3-60}}
+                                source={require('../images/btn_checkin_normal.png')}
+                            />
+                        </TouchableOpacity>
+                        ):
+                            (
+
+                                this.state.buttonTitle==='下班打卡'?(
+                                <TouchableOpacity onPress={this._Sign.bind(this)} >
+                                    <Image
+                                        style={{ justifyContent:"center",alignItems:"center",width:Dimensions.get('window').height /3-60,height:Dimensions.get('window').height /3-60}}
+                                        source={require('../images/btn_checkout_normal.png')}
+                                    />
+                                </TouchableOpacity>
+                                ):(
+                                <TouchableOpacity onPress={this._Sign.bind(this)} disabled={true}>
+                                    <Image
+                                        style={{ justifyContent:"center",alignItems:"center",width:Dimensions.get('window').height /3-60,height:Dimensions.get('window').height /3-60}}
+                                        source={require('../images/btn_check_done.png')}
+                                    />
+                                </TouchableOpacity>
+                                )
+                            )
+                        }
 
                 </View>
 
-                <View style={[{backgroundColor:'#0584FE',height:250,flex:1,justifyContent:'center',alignItems:'center'}]}>
-                    <Text style={[{color:'#FFFFFF',textAlign:'center',lineHeight:18,fontSize:18}]}>登录用户:{this.props.user.realname}</Text>
+                <View style={[{backgroundColor:'#0584FE',height:Dimensions.get('window').height/50,flex:1,justifyContent:'center',alignItems:'center'}]}>
+                    <Text style={[{color:'#FFFFFF',textAlign:'center',fontSize:Dimensions.get('window').height/70}]}>登录用户:{this.props.user.realname}</Text>
                 </View>
 
                 <Modal
