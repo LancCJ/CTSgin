@@ -377,7 +377,35 @@ class SingMainPage extends Component {
         }
 
     }
+    deletePhotoTapped1(){
 
+        //假如有2，3张图片  那么需要将图片设置到  1，2
+
+        this.setState({
+            justifyContentStyle:'space-around',
+
+            avatarSource1: this.state.avatarSource2,
+            base64image1:this.state.base64image2,
+            commitPic1time:this.state.commitPic2time,
+
+            avatarSource2: this.state.avatarSource3,
+            base64image2:this.state.base64image3,
+            commitPic2time:this.state.commitPic3time,
+
+            avatarSource3: null,
+            base64image3:"",
+            commitPic3time:"",
+
+        });
+
+
+
+
+        this.setState({
+
+        });
+
+    }
 
     selectPhotoTapped1() {
         const options = {
@@ -452,6 +480,24 @@ class SingMainPage extends Component {
         });
     }
 
+    deletePhotoTapped2(){
+
+        //假如有3张图片  那么需要将图片设置到  3设置到2，清空3
+
+        this.setState({
+            avatarSource2: this.state.avatarSource3,
+            justifyContentStyle:'space-around',
+            base64image2:this.state.base64image3,
+            commitPic2time:this.state.commitPic3time,
+
+            avatarSource3: null,
+            base64image3:"",
+            commitPic3time:"",
+
+        });
+
+    }
+
 
     selectPhotoTapped2() {
         const options = {
@@ -518,6 +564,15 @@ class SingMainPage extends Component {
 
 
             }
+        });
+    }
+
+    deletePhotoTapped3(){
+        this.setState({
+            avatarSource3: null,
+            justifyContentStyle:'space-around',
+            base64image3:"",
+            commitPic3time:""
         });
     }
 
@@ -617,16 +672,32 @@ class SingMainPage extends Component {
 
                         <TouchableOpacity onPress={this.state.avatarSource1?null:this.selectPhotoTapped1.bind(this)}>
                             <View style={{height:(Dimensions.get('window').width-100)/3,width:(Dimensions.get('window').width-100)/3,borderWidth:0,borderStyle:'dashed',justifyContent:'center',alignItems:'center'}}>
+
                                 <Image source={this.state.avatarSource1?this.state.avatarSource1:require('../images/btn_add_photo_normal.png')} style={styles.image} >
-                                    <Image source={this.state.deleteIcon} style={[{alignSelf:'flex-end'}]} />
+
+                                    {this.state.avatarSource1?(
+                                        <TouchableOpacity onPress={this.deletePhotoTapped1.bind(this)}>
+                                            <Image source={this.state.deleteIcon} style={[{alignSelf:'flex-end',width:(Dimensions.get('window').width-100)/12,height:(Dimensions.get('window').width-100)/12}]} />
+                                        </TouchableOpacity>
+                                    ):(null)
+                                    }
                                 </Image>
+
+
                             </View>
                         </TouchableOpacity>
 
                         {this.state.base64image1?(
                             <TouchableOpacity onPress={this.state.avatarSource2?null:this.selectPhotoTapped2.bind(this)}>
                                 <View style={{height:(Dimensions.get('window').width-100)/3,width:(Dimensions.get('window').width-100)/3,borderWidth:0,borderStyle:'dashed',justifyContent:'center',alignItems:'center'}}>
-                                    <Image source={this.state.avatarSource2?this.state.avatarSource2:require('../images/btn_add_photo_normal.png')} style={styles.image} />
+                                    <Image source={this.state.avatarSource2?this.state.avatarSource2:require('../images/btn_add_photo_normal.png')} style={styles.image} >
+                                        {this.state.avatarSource2?(
+                                            <TouchableOpacity onPress={this.deletePhotoTapped2.bind(this)}>
+                                                <Image source={this.state.deleteIcon} style={[{alignSelf:'flex-end',width:(Dimensions.get('window').width-100)/12,height:(Dimensions.get('window').width-100)/12}]} />
+                                            </TouchableOpacity>
+                                        ):(null)
+                                        }
+                                    </Image>
                                 </View>
                             </TouchableOpacity>
                         ):(null)}
@@ -634,7 +705,14 @@ class SingMainPage extends Component {
                         {this.state.base64image2?(
                             <TouchableOpacity onPress={this.state.avatarSource3?null:this.selectPhotoTapped3.bind(this)}>
                                 <View style={{height:(Dimensions.get('window').width-100)/3,width:(Dimensions.get('window').width-100)/3,borderWidth:0,borderStyle:'dashed',justifyContent:'center',alignItems:'center'}}>
-                                    <Image source={this.state.avatarSource3?this.state.avatarSource3:require('../images/btn_add_photo_normal.png')} style={styles.image} />
+                                    <Image source={this.state.avatarSource3?this.state.avatarSource3:require('../images/btn_add_photo_normal.png')} style={styles.image} >
+                                        {this.state.avatarSource3?(
+                                            <TouchableOpacity onPress={this.deletePhotoTapped3.bind(this)}>
+                                                <Image source={this.state.deleteIcon} style={[{alignSelf:'flex-end',width:(Dimensions.get('window').width-100)/12,height:(Dimensions.get('window').width-100)/12}]} />
+                                            </TouchableOpacity>
+                                        ):(null)
+                                        }
+                                    </Image>
                                 </View>
                             </TouchableOpacity>
                         ):(null)}
@@ -674,7 +752,7 @@ class SingMainPage extends Component {
                 </View>
 
                 <View style={[{backgroundColor:'#0584FE',height:Dimensions.get('window').height/50,flex:1,justifyContent:'center',alignItems:'center'}]}>
-                    <Text style={[{color:'#FFFFFF',textAlign:'center',fontSize:Dimensions.get('window').height/60}]}>登录用户:{this.props.user.realname}</Text>
+                    <Text style={[{color:'#FFFFFF',textAlign:'center',fontSize:Dimensions.get('window').height/50,lineHeight:Dimensions.get('window').height/50}]}>登录用户:{this.props.user.realname}</Text>
                 </View>
 
 

@@ -16,7 +16,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 //定义组件
 import AppLoginPage    from './AppLoginPage';
 import SingMainPage    from './SingMainPage';
-import SignInfoPage    from './SignInfoPage';
+import SignInfoPage    from './PullListDemo';
 import ReasonPage    from './ReasonPage';
 import Dimensions from 'Dimensions';
 
@@ -26,12 +26,14 @@ const styles = StyleSheet.create({
     },
     titleStyle:{
         color:"#FFFFFF",
-        fontSize:Dimensions.get('window').height/30
+        fontSize:Dimensions.get('window').height/30,
+        lineHeight:Dimensions.get('window').height/30
     },
     backTextStyle:{
-        marginLeft:5,
+
         color:"#FFFFFF",
-        fontSize:Dimensions.get('window').height/35
+        fontSize:Dimensions.get('window').height/35,
+        lineHeight:Dimensions.get('window').height/35
     }
 });
 
@@ -41,7 +43,7 @@ const _renderExitButton=()=>{
         <TouchableOpacity onPress={Actions.pop}>
             <View style={[{flexDirection:"row"}]}>
                 <Ionicons name="ios-arrow-back" size={Dimensions.get('window').height/35}  color="#FFFFFF" />
-                <Text style={styles.backTextStyle}>登出</Text>
+                <Text style={[styles.backTextStyle,{marginLeft:5}]}>登出</Text>
             </View>
         </TouchableOpacity>
     );
@@ -52,7 +54,7 @@ const _renderBackButton=()=>{
         <TouchableOpacity onPress={Actions.pop}>
             <View style={[{flexDirection:"row"}]}>
                 <Ionicons name="ios-arrow-back" size={Dimensions.get('window').height/35} color="#FFFFFF" />
-                <Text style={styles.backTextStyle}>返回</Text>
+                <Text style={[styles.backTextStyle,{marginLeft:5}]}>返回</Text>
             </View>
         </TouchableOpacity>
     );
@@ -62,7 +64,7 @@ const _renderRightButton=()=>{
     return (
         <TouchableOpacity onPress={Actions.SignInfoPage}>
             <View style={[{flexDirection:"row"}]}>
-                <Text style={styles.backTextStyle}>考勤记录</Text>
+                <Text style={[styles.backTextStyle,{marginRight:5}]}>考勤记录</Text>
             </View>
         </TouchableOpacity>
     );
