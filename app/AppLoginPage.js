@@ -26,6 +26,7 @@ import Dimensions from 'Dimensions';
 var ScreenWidth = Dimensions.get('window').width;
 var ScreenHeight = Dimensions.get('window').height;
 var ScreenScale = Dimensions.get('window').scale;
+var Spinner = require('react-native-spinkit');
 
 class AppLoginPage extends Component {
     constructor(props) {
@@ -131,8 +132,11 @@ class AppLoginPage extends Component {
 
                     visible={this.props.status=='doing'?true:false}
                 >
+                    <View style={{width:(Dimensions.get('window').width)/2,height:(Dimensions.get('window').width)/2,borderRadius:5,backgroundColor:'#FFFFFF',justifyContent:'center',alignItems:'center'}}>
+                        <Spinner style={styles.spinner} type='Wave' color="#007AFF"/>
+                        <Text>正在登陆</Text>
+                    </View>
 
-                    <Text>正在登陆</Text>
 
                 </Modal>
 

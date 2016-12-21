@@ -26,12 +26,12 @@ const styles = StyleSheet.create({
     },
     titleStyle:{
         color:"#FFFFFF",
-        fontSize:Dimensions.get('window').height/40
+        fontSize:Dimensions.get('window').height/30
     },
     backTextStyle:{
         marginLeft:5,
         color:"#FFFFFF",
-        fontSize:Dimensions.get('window').height/65
+        fontSize:Dimensions.get('window').height/35
     }
 });
 
@@ -40,7 +40,7 @@ const _renderExitButton=()=>{
     return (
         <TouchableOpacity onPress={Actions.pop}>
             <View style={[{flexDirection:"row"}]}>
-                <Ionicons name="ios-arrow-back" size={21}  color="#FFFFFF" />
+                <Ionicons name="ios-arrow-back" size={Dimensions.get('window').height/35}  color="#FFFFFF" />
                 <Text style={styles.backTextStyle}>登出</Text>
             </View>
         </TouchableOpacity>
@@ -51,7 +51,7 @@ const _renderBackButton=()=>{
     return (
         <TouchableOpacity onPress={Actions.pop}>
             <View style={[{flexDirection:"row"}]}>
-                <Ionicons name="ios-arrow-back" size={21} color="#FFFFFF" />
+                <Ionicons name="ios-arrow-back" size={Dimensions.get('window').height/35} color="#FFFFFF" />
                 <Text style={styles.backTextStyle}>返回</Text>
             </View>
         </TouchableOpacity>

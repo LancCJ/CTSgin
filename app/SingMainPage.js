@@ -610,7 +610,7 @@ class SingMainPage extends Component {
 
                 <View style={[styles.center,{borderWidth:0}]}>
                     <View style={{borderBottomWidth:1,borderBottomColor:'#DEDEDE',height:25}}>
-                        <Text style={{marginLeft:50,fontSize:Dimensions.get('window').height/70}}>现场照片</Text>
+                        <Text style={{marginLeft:50,fontSize:Dimensions.get('window').height/40}}>现场照片</Text>
                     </View>
 
                     <View style={{padding:15,flex:1,borderBottomWidth:1,borderBottomColor:'#DEDEDE',flexDirection:'row',marginTop:5,justifyContent:this.state.justifyContentStyle,alignItems:'center'}}>
@@ -674,7 +674,7 @@ class SingMainPage extends Component {
                 </View>
 
                 <View style={[{backgroundColor:'#0584FE',height:Dimensions.get('window').height/50,flex:1,justifyContent:'center',alignItems:'center'}]}>
-                    <Text style={[{color:'#FFFFFF',textAlign:'center',fontSize:Dimensions.get('window').height/70}]}>登录用户:{this.props.user.realname}</Text>
+                    <Text style={[{color:'#FFFFFF',textAlign:'center',fontSize:Dimensions.get('window').height/60}]}>登录用户:{this.props.user.realname}</Text>
                 </View>
 
 
