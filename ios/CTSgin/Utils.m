@@ -1,8 +1,32 @@
 #import "Utils.h"
 #import <UIKit/UIKit.h>
+
 @implementation Utils
 
 RCT_EXPORT_MODULE();
+
+
+RCT_REMAP_METHOD(getcCode,
+                 string1:(NSString *)string1
+                 string2:(NSString *)string2
+                 string3:(NSString *)string3
+                 resolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject)
+{
+  
+  NSDictionary *events=[NSDictionary dictionaryWithObjectsAndKeys:@"0",@"code",@"",@"data",nil];
+  
+  if (events) {
+    resolve(events);
+  } else {
+    NSError *error=[NSError errorWithDomain:@"Promise回调错误信息..." code:101 userInfo:nil];
+    reject(@"no_events", @"There were no events", error);
+  }
+
+}
+
+
+
 
 //对外提供调用方法,演示Promise使用
 RCT_REMAP_METHOD(addWaterMark,
@@ -27,19 +51,14 @@ RCT_REMAP_METHOD(addWaterMark,
   
   //添加水印
   
-
-  
   //UIImage图片转成Base64字符串：
   
    NSData *data = UIImageJPEGRepresentation([self watermarkImage:decodedImage waterMark1:waterMark1 waterMark2:waterMark2 waterMark3:waterMark3 waterMark4:waterMark4], 1.0f);
   
-  
   NSString *encodedImageStr = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
   
-
  
   NSDictionary *events=[NSDictionary dictionaryWithObjectsAndKeys:@"0",@"code",encodedImageStr,@"data",nil];
-
   
   if (events) {
     resolve(events);
