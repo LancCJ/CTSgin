@@ -36,6 +36,7 @@ import { Icon,SocialIcon } from 'react-native-elements'
 import Button from 'apsl-react-native-button'
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
+var DeviceInfo = require('react-native-device-info');
 
 var Platform = require('react-native').Platform;
 var ImagePicker = require('react-native-image-picker');
@@ -285,7 +286,8 @@ class SingMainPage extends Component {
             'TYPE':this.state.signState+1,
             'DEPT_ID':	this.props.user.deptId,
             'LONGITUDE':	this.state.longitude,
-            'LATITUDE':	this.state.latitude
+            'LATITUDE':	this.state.latitude,
+            'IMEI':	''
         }
 
         this.setState({

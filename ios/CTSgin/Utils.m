@@ -1,15 +1,14 @@
 #import "Utils.h"
 #import <UIKit/UIKit.h>
+#import <EncryptUtils.h>
 
 @implementation Utils
 
 RCT_EXPORT_MODULE();
 
 
-RCT_REMAP_METHOD(getcCode,
+RCT_REMAP_METHOD(getUserAccessToken,
                  string1:(NSString *)string1
-                 string2:(NSString *)string2
-                 string3:(NSString *)string3
                  resolver:(RCTPromiseResolveBlock)resolve
                  rejecter:(RCTPromiseRejectBlock)reject)
 {

@@ -13,6 +13,7 @@
 		00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
 		00E356F31AD99517003FC87E /* CTSginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* CTSginTests.m */; };
+		0C0AEF341E0B7BF200076011 /* EncryptUtils.java in Sources */ = {isa = PBXBuildFile; fileRef = 0C0AEF331E0B7BF200076011 /* EncryptUtils.java */; };
 		0C3F492A1E091DF700FDBC97 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 0C3F49271E091DF700FDBC97 /* assets */; };
 		0C3F492B1E091DF700FDBC97 /* index.ios.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 0C3F49281E091DF700FDBC97 /* index.ios.jsbundle */; };
 		0C3F492C1E091DF700FDBC97 /* index.ios.jsbundle.meta in Resources */ = {isa = PBXBuildFile; fileRef = 0C3F49291E091DF700FDBC97 /* index.ios.jsbundle.meta */; };
@@ -62,6 +63,20 @@
 		E12D441710D14F8F8AB6E2B9 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BBA8495AD2DB47FFB768B773 /* Zocial.ttf */; };
 		F9E5CEE05F6B46D18B7B9EF3 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B101F22E1994495FB85666BE /* Octicons.ttf */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXBuildRule section */
+		0C0AEF2C1E0B6EF300076011 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			fileType = sourcecode.java;
+			isEditable = 1;
+			outputFiles = (
+				"$(DERIVED_FILE_DIR)/${INPUT_FILE_BASE}.h",
+				"$(DERIVED_FILE_DIR)/${INPUT_FILE_BASE}.m ",
+			);
+			script = "/Users/lanccj/Documents/Tools/j2objc/j2objc \\\n-d ${DERIVED_FILE_DIR} \\\n-sourcepath ${PROJECT_DIR}/CTSign/java/src \\\n--no-package-directories ${INPUT_FILE_PATH};";
+		};
+/* End PBXBuildRule section */
 
 /* Begin PBXContainerItemProxy section */
 		00C302AB1ABCB8CE00DB3ED1 /* PBXContainerItemProxy */ = {
@@ -272,6 +287,7 @@
 		00E356EE1AD99517003FC87E /* CTSginTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CTSginTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* CTSginTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CTSginTests.m; sourceTree = "<group>"; };
+		0C0AEF331E0B7BF200076011 /* EncryptUtils.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; name = EncryptUtils.java; path = src/com/lanccj/util/EncryptUtils.java; sourceTree = "<group>"; };
 		0C3F49271E091DF700FDBC97 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = bundle/assets; sourceTree = "<group>"; };
 		0C3F49281E091DF700FDBC97 /* index.ios.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = index.ios.jsbundle; path = bundle/index.ios.jsbundle; sourceTree = "<group>"; };
 		0C3F49291E091DF700FDBC97 /* index.ios.jsbundle.meta */ = {isa = PBXFileReference; lastKnownFileType = file; name = index.ios.jsbundle.meta; path = bundle/index.ios.jsbundle.meta; sourceTree = "<group>"; };
@@ -442,6 +458,22 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		0C0AEF311E0B7BDC00076011 /* java */ = {
+			isa = PBXGroup;
+			children = (
+				0C0AEF351E0B7C1A00076011 /* src */,
+			);
+			name = java;
+			sourceTree = "<group>";
+		};
+		0C0AEF351E0B7C1A00076011 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				0C0AEF331E0B7BF200076011 /* EncryptUtils.java */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
 		0C4E409B1E01265400AABD31 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -527,6 +559,7 @@
 		13B07FAE1A68108700A75B9A /* CTSgin */ = {
 			isa = PBXGroup;
 			children = (
+				0C0AEF311E0B7BDC00076011 /* java */,
 				0C3F49271E091DF700FDBC97 /* assets */,
 				0C3F49281E091DF700FDBC97 /* index.ios.jsbundle */,
 				0C3F49291E091DF700FDBC97 /* index.ios.jsbundle.meta */,
@@ -690,6 +723,7 @@
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 			);
 			buildRules = (
+				0C0AEF2C1E0B6EF300076011 /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -1069,6 +1103,7 @@
 				0CE54A041E0788B20007475F /* Utils.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				0C0AEF341E0B7BF200076011 /* EncryptUtils.java in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1137,7 +1172,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../node_modules/react-native-baidu-map/ios/lib";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)/../node_modules/react-native-baidu-map/ios/lib",
+					"${J2OBJC_HOME}/frameworks",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native/React/**",
@@ -1153,16 +1191,20 @@
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 				);
 				INFOPLIST_FILE = CTSgin/Info.plist;
+				J2OBJC_HOME = /Users/lanccj/Documents/Tools/j2objc;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "${J2OBJC_HOME}/lib";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
+					"-ljre_emul",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cyber.CTSgin;
 				PRODUCT_NAME = CTSgin;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
+				USER_HEADER_SEARCH_PATHS = "${J2OBJC_HOME}/include";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1175,7 +1217,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../node_modules/react-native-baidu-map/ios/lib";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)/../node_modules/react-native-baidu-map/ios/lib",
+					"${J2OBJC_HOME}/frameworks",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native/React/**",
@@ -1191,16 +1236,20 @@
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 				);
 				INFOPLIST_FILE = CTSgin/Info.plist;
+				J2OBJC_HOME = /Users/lanccj/Documents/Tools/j2objc;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "${J2OBJC_HOME}/lib";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
+					"-ljre_emul",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cyber.CTSgin;
 				PRODUCT_NAME = CTSgin;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
+				USER_HEADER_SEARCH_PATHS = "${J2OBJC_HOME}/include";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
