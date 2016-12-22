@@ -21,12 +21,20 @@ import {connect} from 'react-redux';//将我们的页面和action链接起来
 import {bindActionCreators} from 'redux';//将要绑定的actions和dispatch绑定到一起
 import * as actionCreators from './redux/actions/LoginAction';//导入需要绑定的actions
 
+
+
 import Dimensions from 'Dimensions';
 
 var ScreenWidth = Dimensions.get('window').width;
 var ScreenHeight = Dimensions.get('window').height;
 var ScreenScale = Dimensions.get('window').scale;
 var Spinner = require('react-native-spinkit');
+
+
+import {NativeModules} from 'react-native';
+
+
+
 
 class AppLoginPage extends Component {
     constructor(props) {
@@ -84,11 +92,30 @@ class AppLoginPage extends Component {
         return true;
     }
 
+    componentDidMount(){
+        this._AESEncryptByPromise();
+
+    }
+
+    async _AESEncryptByPromise(){
+        let EncryptionModule=NativeModules.EncryptionModule
+//待加密的信息
+        let PASSWORD='745r#x3g';
+        let KEY='wIEuw3kAGwVNl7BW';  //16位AES加密私钥
+
+        try{
+            let result=await EncryptionModule.AESEncryptByPromise(PASSWORD,KEY);
+            this.setState({AES_Result:result});
+        }catch(e){
+            this.setState({AES_Result:'AES加密失败-通过Promise回调'});
+        }
+    }
+
     render () {
         return (
             <View style={styles.container}>
                 <View style={styles.loginform}>
-                    <FormLabel>用户名:</FormLabel>
+                    <FormLabel>{this.state.AES_Result}用户名:</FormLabel>
                     <FormInput
                         style={[styles.textInput,{marginTop:2}]}
                         placeholder='    在此输入用户名'

@@ -1,6 +1,5 @@
 #import "Utils.h"
 #import <UIKit/UIKit.h>
-#import <EncryptUtils.h>
 
 @implementation Utils
 
