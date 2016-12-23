@@ -27,13 +27,11 @@ const styles = StyleSheet.create({
     titleStyle:{
         color:"#FFFFFF",
         fontSize:Dimensions.get('window').height/30,
-        lineHeight:Dimensions.get('window').height/30
     },
     backTextStyle:{
 
         color:"#FFFFFF",
         fontSize:Dimensions.get('window').height/35,
-        lineHeight:Dimensions.get('window').height/35
     }
 });
 

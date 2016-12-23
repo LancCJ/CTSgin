@@ -31,7 +31,6 @@ var ScreenScale = Dimensions.get('window').scale;
 var Spinner = require('react-native-spinkit');
 
 
-import {NativeModules} from 'react-native';
 
 
 
@@ -92,30 +91,30 @@ class AppLoginPage extends Component {
         return true;
     }
 
-    componentDidMount(){
-        this._AESEncryptByPromise();
-
-    }
-
-    async _AESEncryptByPromise(){
-        let EncryptionModule=NativeModules.EncryptionModule
-//待加密的信息
-        let PASSWORD='745r#x3g';
-        let KEY='wIEuw3kAGwVNl7BW';  //16位AES加密私钥
-
-        try{
-            let result=await EncryptionModule.AESEncryptByPromise(PASSWORD,KEY);
-            this.setState({AES_Result:result});
-        }catch(e){
-            this.setState({AES_Result:'AES加密失败-通过Promise回调'});
-        }
-    }
+ //   {/*componentDidMount(){*/}
+//         this._AESEncryptByPromise();
+//
+//     }
+//
+//     async _AESEncryptByPromise(){
+//         var EncryptionModule=NativeModules.EncryptionModule
+// //待加密的信息
+//         var PASSWORD='745r#x3g';
+//         var KEY='1QAZXSW23EDCVFR4';  //16位AES加密私钥
+//
+//         try{
+//             var result=await EncryptionModule.AESEncryptByPromise(PASSWORD,KEY);
+//             this.setState({AES_Result:result});
+//         }catch(e){
+//             this.setState({AES_Result:'AES加密失败-通过Promise回调'});
+//         }
+//     }
 
     render () {
         return (
             <View style={styles.container}>
                 <View style={styles.loginform}>
-                    <FormLabel>{this.state.AES_Result}用户名:</FormLabel>
+                    <FormLabel>用户名:</FormLabel>
                     <FormInput
                         style={[styles.textInput,{marginTop:2}]}
                         placeholder='    在此输入用户名'

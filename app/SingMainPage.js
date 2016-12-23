@@ -119,7 +119,7 @@ class SingMainPage extends Component {
         //获取登录用户的签到状态然后来加载按钮文字
         //console.log(this.props.user);
         ////console.log('查询'+this.props.user.realname+'的签到状态');
-        this.props.actions.signState(this.props.user);//dispath 查询签到状态
+       // this.props.actions.signState(this.props.user);//dispath 查询签到状态
 
         // //console.log(this.props.user);
         //获取手机当前坐标
@@ -754,7 +754,7 @@ class SingMainPage extends Component {
                 </View>
 
                 <View style={[{backgroundColor:'#0584FE',height:Dimensions.get('window').height/50,flex:1,justifyContent:'center',alignItems:'center'}]}>
-                    <Text style={[{color:'#FFFFFF',textAlign:'center',fontSize:Dimensions.get('window').height/50,lineHeight:Dimensions.get('window').height/50}]}>登录用户:{this.props.user.realname}</Text>
+                    <Text style={[{color:'#FFFFFF',textAlign:'center',fontSize:Dimensions.get('window').height/50}]}>登录用户:{this.props.user.realname}</Text>
                 </View>
 
 
