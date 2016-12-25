@@ -11,6 +11,7 @@ import {
     ListView,
     Alert
 } from 'react-native';
+var DeviceInfo = require('react-native-device-info');
 /**
  *Json处理工具类
  */
@@ -34,6 +35,42 @@ export default class JsonUtil extends Component {
             obj[k] = v;
         }
         return obj;
+    }
+
+    static getHeaders(seq,accesstoken,latitude,longitude){
+        var reqHeaders = new Headers();
+
+        reqHeaders.append("cybertech-imei", "");
+        reqHeaders.append("cybertech-seq", seq);
+        reqHeaders.append("cybertech-gsm-cid", "");
+        reqHeaders.append("cybertech-imsi", "");
+        reqHeaders.append("cybertech-gsm-lac", "");
+        reqHeaders.append("cybertech-gsm-lac", "");
+        reqHeaders.append("cybertech-access-token", accesstoken);
+        reqHeaders.append("cybertech-user-zjhm", "");
+
+        reqHeaders.append("cybertech-gps-jd", latitude);
+        reqHeaders.append("cybertech-gps-wd", longitude);
+
+        reqHeaders.append("User-Agent", 'Dalvik/2.1.0 (Linux; U; Android 7.0; HUAWEI NXT-AL10 Build/HUAWEINXT-AL10)');
+        reqHeaders.append("Accept-Encoding", 'gzip');
+
+
+
+
+
+        // {
+        //     //'cybertech-imei':DeviceInfo.getUniqueID(),
+        //     'cybertech-imei':'',
+        //     'cybertech-seq':seq,
+        //     'cybertech-gsm-cid':'-1',
+        //     'cybertech-imsi':'',
+        //     'cybertech-gsm-lac':'-1',
+        //     'cybertech-access-token':accesstoken,
+        //     'cybertech-user-zjhm':''
+        //
+        // }
+        return reqHeaders;
     }
 }
 

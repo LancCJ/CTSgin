@@ -6,7 +6,9 @@ import StateCode from '../../common/StateCode';
 //ActionTpye
 import * as ActionTypes from '../actions/ActionTypes';
 
-export function signState(user){
+import JsonUtil from '../../common/utils/JsonUtil'
+
+export function signState(user,headers){
     //console.log('action-查询用户签到状态');
     return (dispatch)=>{
         //处理参数
@@ -16,12 +18,13 @@ export function signState(user){
             'pageIndex':'0',
             'pageSize': '6'
         };
-
-
         // let testJson=require('./state.json');
         //  //console.log(testJson)
 
-        NetUtil.ptos(Constant.SignStateUrl,params,function (result) {
+
+
+
+        NetUtil.ptoswidthheader(Constant.SignStateUrl,params,headers,function (result) {
 
              //console.log(result);
             //

@@ -30,6 +30,7 @@ import JSUtil from './common/utils/JSUtil';
 
 import moment from './common/utils/moment';
 
+import JsonUtil from './common/utils/JsonUtil'
 
 var Spinner = require('react-native-spinkit');
 import { Icon,SocialIcon } from 'react-native-elements'
@@ -43,6 +44,8 @@ var ImagePicker = require('react-native-image-picker');
 import {Actions} from 'react-native-router-flux';
 import Modal from 'react-native-root-modal';
 
+var Utils = NativeModules.Utils;
+var sKey='1QAZXSW23EDCVFR4';
 
 // More info on all the options is below in the README...just some common use cases shown here
 var options = {
@@ -116,10 +119,27 @@ class SingMainPage extends Component {
     componentWillMount(){
 
 
+        //获取用户userAccessToken
+        let getStateUUID=JSUtil.uuid();
+        Utils.getUserAccessToken(getStateUUID,sKey).then(response=>{
+            if(response.code==='0'){
+
+                let headers=JsonUtil.getHeaders(getStateUUID,accesstoken,'','');
+
+                console.log(headers);
+
+                this.props.actions.signState(this.props.user,headers);//dispath 查询签到状态
+            }else{
+                Alert.alert("生成cybertech-access-token失败");
+            }
+        });
+
+
+
         //获取登录用户的签到状态然后来加载按钮文字
         //console.log(this.props.user);
         ////console.log('查询'+this.props.user.realname+'的签到状态');
-       // this.props.actions.signState(this.props.user);//dispath 查询签到状态
+
 
         // //console.log(this.props.user);
         //获取手机当前坐标
@@ -155,6 +175,9 @@ class SingMainPage extends Component {
                         locationName:data.province+data.city+data.address+data.streetName+data.streetNumber
                     });
 
+
+
+
                 })
 
             })
@@ -170,6 +193,10 @@ class SingMainPage extends Component {
         Ionicons.getImageSource('ios-add', (Dimensions.get('window').width-200)/3,'#DEDEDE').then((source) => this.setState({ addIcon: source }));
 
         Ionicons.getImageSource('ios-close-circle', 50,'#FF0000').then((source) => this.setState({ deleteIcon: source }));
+
+
+
+
 
     }
 
@@ -452,7 +479,7 @@ class SingMainPage extends Component {
 
                 //添加水印
                 ////console.log(response.data);
-                var Utils = NativeModules.Utils;
+
 
 
                 let time=moment().format('YYYY-MM-DD hh:mm:ss');
@@ -544,7 +571,6 @@ class SingMainPage extends Component {
                 //console.log('添加水印')
 
                 //添加水印
-                var Utils = NativeModules.Utils;
 
                 let time=moment().format('YYYY-MM-DD hh:mm:ss');
 
@@ -623,7 +649,6 @@ class SingMainPage extends Component {
 
                 //添加水印
 
-                var Utils = NativeModules.Utils;
 
                 let time=moment().format('YYYY-MM-DD hh:mm:ss');
 

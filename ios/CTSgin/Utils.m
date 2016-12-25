@@ -1,7 +1,6 @@
 #import "Utils.h"
 #import <UIKit/UIKit.h>
-
-#import "Helper.h"
+#import "AES128Util.h"
 
 @implementation Utils
 
@@ -9,17 +8,44 @@ RCT_EXPORT_MODULE();
 
 
 RCT_REMAP_METHOD(getUserAccessToken,
-                 string1:(NSString *)string1
+                 uuid:(NSString *)uuid
+                 sKey:(NSString *)sKey
                  resolver:(RCTPromiseResolveBlock)resolve
                  rejecter:(RCTPromiseRejectBlock)reject)
 {
   
-  NSDictionary *events=[NSDictionary dictionaryWithObjectsAndKeys:@"0",@"code",@"",@"data",nil];
+  NSDate* dat = [NSDate dateWithTimeIntervalSinceNow:0];
+  
+  NSTimeInterval a=[dat timeIntervalSince1970]*1000; // *1000 是精确到毫秒，不乘就是精确到秒
+  
+  NSString *timeSp = [NSString stringWithFormat:@"%.0f", a]; //转为字符型
+  
+
+//  NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
+//  
+//  NSString *timeSp =[self getCurrentTime];
+  //[NSString stringWithFormat:@"%d", (long)[datenow timeIntervalSince1970]];
+  
+  NSLog(@"timeSp:%@",timeSp);
+  //NSLog(@"timeSp:%@",timeSp); //时间戳的值时间戳转时间的方法
+  
+  //生成被加密字符串
+  NSString *sSrc=[NSString stringWithFormat:@"%@$%@",uuid,timeSp];
+  NSLog(@"sSrc:%@",sSrc);
+  //加密
+  NSString *encryStr = [AES128Util AES128Encrypt:sSrc key:sKey];
+//  //解密
+//  NSString *decryStr = [AES128Util AES128Decrypt:encryStr key:@"1QAZXSW23EDCVFR4"];
+//  
+//  NSLog(@"\n加密前：%@\n加密后：%@ \n解密后：%@",@"e22cce61-94dc-4d44-95df-f17f352222c3$1482509368841",encryStr,decryStr);
+//
+  
+  NSDictionary *events=[NSDictionary dictionaryWithObjectsAndKeys:@"0",@"code",encryStr,@"data",nil];
   
   if (events) {
     resolve(events);
   } else {
-    NSError *error=[NSError errorWithDomain:@"Promise回调错误信息..." code:101 userInfo:nil];
+    NSError *error=[NSError errorWithDomain:@"Promise回调错误信息..." code:101 data:nil];
     reject(@"no_events", @"There were no events", error);
   }
 
@@ -38,32 +64,6 @@ RCT_REMAP_METHOD(addWaterMark,
                  resolver:(RCTPromiseResolveBlock)resolve
                  rejecter:(RCTPromiseRejectBlock)reject)
 {
-//  
-//  //MD5
-//  NSString *md5Str = [Helper md5:@"我爱你"];
-//  NSLog(@"md5Str is %@",md5Str);//Log is 4F2016C6B934D55BD7120E5D0E62CCE3
-//  
-//  //Base64
-//  NSString *Base64Str = [Helper base64StringFromText:@"我爱你"];
-//  NSLog(@"Base64Str is %@",Base64Str);//Log is 5oiR54ix5L2g
-//  
-//  NSString *oriBase64Str = [Helper textFromBase64String:Base64Str];
-//  NSLog(@"oriBase64Str is %@",oriBase64Str);//Log is  我爱你
-//  
-//  //DES
-//  NSString *desEnStr = [Helper encryptSting:@"我爱你" key:@"521" andDesiv:@"521"];
-//  NSLog(@"desEnStr is %@",desEnStr);//Log is  389280aa791ee933
-//  NSString *desDeStr =[Helper decryptWithDESString:desEnStr key:@"521" andiV:@"521"];
-//  NSLog(@"desDeStr is %@",desDeStr);//Log is  我爱你
-  
-  //AES
-  NSData *aesEnData = [Helper AES128EncryptWithKey:@"1QAZXSW23EDCVFR4" iv:nil withNSData:[@"11111$100" dataUsingEncoding:NSUTF8StringEncoding]];
-  NSLog(@"aesEnStr is %@",[Helper data2Hex:aesEnData]);//Log is HZKhnRLlQ8XjMjpelOAwsQ==
-  
-//  NSData *aesDeData = [Helper AES128DecryptWithKey:@"1QAZXSW23EDCVFR4" iv:@"521" withNSData:aesEnData];
-//  NSLog(@"aesDEStr is %@",aesDeData);//Log is aesDEStr is 5oiR54ix5L2gAAAAAAAAAA== and result is 我爱你
-  
-  
  // RCTLogInfo(@"未添加水印%@ 水印%@ 水印Style %@,%@,%@", orginBase64, waterMark1,waterMark2,waterMark3,waterMark4);
   
   //UIImage *image=[self dataURL2Image:orginBase64];
@@ -89,7 +89,7 @@ RCT_REMAP_METHOD(addWaterMark,
   if (events) {
     resolve(events);
   } else {
-    NSError *error=[NSError errorWithDomain:@"Promise回调错误信息..." code:101 userInfo:nil];
+    NSError *error=[NSError errorWithDomain:@"Promise回调错误信息..." code:101 data:nil];
     reject(@"no_events", @"There were no events", error);
   }
 }
@@ -216,22 +216,23 @@ waterMark4:(NSString *)waterMark4
   
 }
 
-/**
- 加半透明水印
- @param useImage 需要加水印的图片
- @param addImage1 水印
- @returns 加好水印的图片
- */
-- (UIImage *)addImage:(UIImage *)useImage addMsakImage:(UIImage *)maskImage msakRect:(CGRect)rect
-{
-  UIGraphicsBeginImageContext(useImage.size);
-  [useImage drawInRect:CGRectMake(0, 0, useImage.size.width, useImage.size.height)];
+
+- (NSString*)getCurrentTime {
   
-  //四个参数为水印图片的位置
-  [maskImage drawInRect:rect];
-  UIImage *resultingImage = UIGraphicsGetImageFromCurrentImageContext();
-  UIGraphicsEndImageContext();
-  return resultingImage;
+  NSDate*datenow = [NSDate date];
+  
+  NSString*timeSp = [NSString stringWithFormat:@"%ld", (long)datenow];
+  
+  NSTimeZone*zone = [NSTimeZone timeZoneWithName:@"Asia/Beijing"];
+  
+  NSInteger interval = [zone secondsFromGMTForDate:datenow];
+  
+  NSDate*localeDate = [datenow dateByAddingTimeInterval:interval];
+  
+  NSString*timeSpp = [NSString stringWithFormat:@"%f", localeDate];
+  
+  return timeSp;
+  
 }
 
 
